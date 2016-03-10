@@ -45,9 +45,9 @@ io.sockets.on('connection', function(socket) {
   socket.on('new note', function(data) {
     // New note added, push to all sockets and insert into db
     notes.push(data);
-    io.sockets.emit('new note', data)
+    io.sockets.emit('new note', data);
       // Use node's db injection format to filter incoming data
-    db.query('INSERT INTO notes (note) VALUES (?)', data.note)
+    db.query('INSERT INTO notes (note) VALUES (?)', data.note);
   });
 
   // Check to see if initial query/notes are set
@@ -62,7 +62,6 @@ io.sockets.on('connection', function(socket) {
         // Only emit notes after query has been completed
         socket.emit('initial notes', notes)
       });
-
     isInitNotes = true
   } else {
     // Initial notes already exist, send out
