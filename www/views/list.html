@@ -1,0 +1,65 @@
+<div>
+    <!--
+    <script>
+        $(document).ready(function() {
+            // Connect to our node/websockets server
+            var ip = 'http://localhost:';
+            var port = 3000;
+            var dir = ip + port;
+            var socket = io.connect(dir);
+
+            // Initial set of notes, loop through and add to list
+            socket.on('initial notes', function(data) {
+                var html = '';
+                for (var i = 0; i < data.length; i++) {
+                    // We store html as a var then add to DOM after for efficiency
+                    html += '<li class=list-group-item >' + data[i].note + '</li>'
+                }
+                $('#notes').html(html)
+            });
+
+            // New note emitted, add it to our list of current notes
+            socket.on('new note', function(data) {
+                $('#notes').append('<li class=list-group-item>' + data.note + '</li>');
+            });
+
+            // New socket connected, display new count on page
+            socket.on('users connected', function(data) {
+                $('#usersConnected').html('Users connected: ' + data);
+            });
+
+            socket.on('users connected', function(data) {
+                $('#usersConnected').html('Online: ' + data);
+            });
+
+            // Add a new (random) note, emit to server to let others know
+            $('#addData_Btn').click(function() {
+                console.log(">>: " + $('#textData_Input').val());
+                socket.emit('new note', {note: $('#textData_Input').val()});
+            });
+        })
+    </script>
+-->
+    <div class="list-group" ng-controller="ConfigController" ng-cloak>
+        <a href="#" class="list-group-item active">
+            Listado de notas, <div id="usersConnected"></div>
+        </a>
+        <div class="row">
+            <!-- /.col-lg-6 -->
+            <form>
+                <div class="col-lg-12">
+                    <div class="input-group">
+                        <input id="textData_Input" type="text" class="form-control" placeholder="Nuevo item">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="addData_Btn">Agregar</button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+            <!-- /.col-lg-6 -->
+        </div>
+        <!-- /.row -->
+        <a id="notes" class="list-group-item"></a>
+    </div>
+    <div id="newNote">Create a new note</div>
+</div>

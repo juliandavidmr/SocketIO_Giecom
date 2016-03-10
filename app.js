@@ -8,6 +8,7 @@ var io = require('socket.io')(http);
 var mysql = require('mysql');
 
 app.use(express.static('bower_components'));
+app.use(express.static('www'));
 
 var db = mysql.createConnection({
   host: 'localhost',
@@ -70,6 +71,10 @@ io.sockets.on('connection', function(socket) {
 });
 
 app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/www/views/index.html');
+});
+
+app.get('/graph', function(req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
