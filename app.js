@@ -1,10 +1,13 @@
 /**
  * Created by julian on 9/03/16.
  */
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mysql = require('mysql');
+
+app.use(express.static('bower_components'));
 
 var db = mysql.createConnection({
   host: 'localhost',
