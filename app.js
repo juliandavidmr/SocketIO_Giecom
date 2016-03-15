@@ -47,35 +47,11 @@ io.sockets.on('connection', function(socket) {
     // New note added, push to all sockets and insert into db
     notes.push(data);
     io.sockets.emit('new note', data);
-      // Use node's db injection format to filter incoming data
-    db.query('INSERT INTO notes (note) VALUES (?)', data.note);
+    // Use node's db injection format to filter incoming data
+    insertNote(data);
   });
 
-  // Check to see if initial query/notes are set
-  if (!isInitNotes) {
-    // Initial app start, run db query
-    db.query('SELECT * FROM notes')
-      .on('result', function(data) {
-        // Push results onto the notes array
-        notes.push(data)
-      })
-      .on('end', function() {
-        // Only emit notes after query has been completed
-        socket.emit('initial notes', notes)
-      });
-    isInitNotes = true
-  } else {
-    // Initial notes already exist, send out
-    socket.emit('initial notes', notes)
-  }
-});
-
-app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/www/views/index.html');
-});
-
-app.get('/graph', function(req, res) {
-  res.sendFile(__dirname + '/index.html');
+  consultarNotas(socket);
 });
 
 io.on('connection', function(socket) {
@@ -83,6 +59,45 @@ io.on('connection', function(socket) {
     io.emit('chat message', msg);
   });
 });
+
+app.post('/add/:item', function(req, res) {
+  var data = req.params['item'];
+  data = {
+    note: data
+  };
+  io.emit('new note', data);
+  insertNote(data);
+  res.json(data);
+});
+
+app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/www/views/index.html');
+});
+
+function consultarNotas(socket){
+    notes = [];
+    db.query('SELECT * FROM notes')
+        .on('result', function(data) {
+          // Push results onto the notes array
+          notes.push(data)
+        })
+        .on('end', function() {
+          // Only emit notes after query has been completed
+          socket.emit('initial notes', notes)
+        });
+}
+
+function insertNote(data){
+  try {
+    db.query('INSERT INTO notes (note) VALUES (?)', data.note);
+  }catch(err) {
+    console.log("Error al insertar Data en la database. " + err);
+  }
+}
+
+/*
+* Listen 3000
+* */
 
 http.listen(3000, function() {
   console.log('listening on *:3000');

@@ -1,19 +1,20 @@
 /**
  * Created by julian on 10/03/16.
  */
-var app = angular.module('AppSocket',['btford.socket-io']);
+//var app = angular.module('AppSocket',['btford.socket-io']);
 
+/*
 app.controller('AppController', ['$scope', function($scope, socket) {
    /* $scope.ip_route = 'http://localhost:';
     $scope.port = 3000;
-    $scope.dir =  $scope.ip_route +  $scope.port;*/
+    $scope.dir =  $scope.ip_route +  $scope.port;
     socket.on('init', function (data) {
         $scope.name = data.name;
         $scope.users = data.users;
     });
 
     // Initial set of notes, loop through and add to list
-    this.socket.on('initial notes', function(data) {
+    socket.on('initial notes', function(data) {
         var html = '';
         for (var i = 0; i < data.length; i++) {
             // We store html as a var then add to DOM after for efficiency
@@ -23,7 +24,7 @@ app.controller('AppController', ['$scope', function($scope, socket) {
 //        $('#notes').html(html)
     });
 }]);
-
+*/
 /*
 app.controller('SocketController', ['$scope', function($scope, socket) {
 
