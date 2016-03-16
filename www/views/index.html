@@ -3,26 +3,37 @@
   <head>
     <meta charset="UTF-8">
     <title>Title</title>
-      <!-- Latest compiled and minified CSS -->
-      <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
   </head>
-  <body ng-app>
+  <body ng-app="AppSocket">
     <div class="container" ng-cloak>
-        <div class="page-header">
-            <h1>GIECOM  <small>Subtext for header</small></h1>
-        </div>
-        <ul class="nav nav-tabs" ng-init="tab = 1" ng-cloak>
-            <li role="presentation" ng-class="tab == 1? active: ''" ng-click="tab=1"><a href="#">Home</a></li>
-            <li role="presentation" ng-class="tab == 2? active: ''" ng-click="tab=2"><a href="#">Profile</a></li>
-            <li role="presentation" ng-class="tab == 3? active: ''" ng-click="tab=3"><a href="#">Messages</a></li>
-        </ul>
-        <div ng-show="tab==1">
-            <br>
-            <div ng-include="'views/list.html'"></div>
-        </div>
-        <div ng-show="tab==2">
-            <h1>Hola 2</h1>
-        </div>
+      <div class="page-header">
+        <h1>GIECOM
+          <small>Subtext for header</small>
+        </h1>
+      </div>
+      <ul class="nav nav-tabs" ng-init="tab = 1" ng-cloak>
+        <li role="presentation" ng-class="tab == 1? active: ''" ng-click="tab=1">
+          <a href="#">Home</a>
+        </li>
+        <li role="presentation" ng-class="tab == 2? active: ''" ng-click="tab=2">
+          <a href="#">Profile</a>
+        </li>
+        <li role="presentation" ng-class="tab == 3? active: ''" ng-click="tab=3">
+          <a href="#">Messages</a>
+        </li>
+      </ul>
+      <br>
+      <div ng-show="tab==1">
+        <div ng-include="'views/list.html'"></div>
+      </div>
+      <div ng-show="tab==2">
+        <div ng-include="'views/graph/barras0.html'"></div>
+      </div>
+      <div ng-show="tab==3">
+        <div ng-include="'views/graph/barras.html'"></div>
+      </div>
     </div>
 
   </body>
@@ -35,4 +46,6 @@
   <script src="../js/Controller_Connection.js"></script>-->
   <!--<script src="../js/Services.js"></script>-->
   <script src="../js/socketRequest.js"></script>
+  <script src="Chart.js/Chart.min.js" charset="utf-8"></script>
+  <script src="Chart.js/Chart.js" charset="utf-8"></script>
 </html>
