@@ -6,10 +6,20 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mysql = require('mysql');
+var expressLayouts = require('express-ejs-layouts')
 
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+
+//folders static
 app.use(express.static('bower_components'));
 app.use(express.static('www'));
 
+//layout
+app.set('layout', false); // defaults to 'layout'
+app.use(expressLayouts);
+
+//config db connection
 var db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -24,6 +34,47 @@ db.connect(function(err) {
   } else {
     console.log("Base de datos conectada.");
   }
+});
+
+
+
+/* ____________________________________________________________________________
+                          RUTAS
+   ____________________________________________________________________________
+*/
+
+app.get('/', function(req, res) {
+  //res.sendFile(__dirname + '/www/views/index.html');
+  //res.render(__dirname + '/www/dashboard',{ layout: 'layout' });
+  res.render(__dirname + '/www/views/dashboard');
+});
+
+app.get('/user', function(req, res) {
+  res.render(__dirname + '/www/views/user');
+});
+
+app.get('/table', function(req, res) {
+  res.render(__dirname + '/www/views/table');
+});
+
+app.get('/typography', function(req, res) {
+  res.render(__dirname + '/www/views/typography');
+});
+
+app.get('/icons', function(req, res) {
+  res.render(__dirname + '/www/views/icons');
+});
+
+app.get('/maps', function(req, res) {
+  res.render(__dirname + '/www/views/maps');
+});
+
+app.get('/template', function(req, res) {
+  res.render(__dirname + '/www/views/template');
+});
+
+app.get('/notifications', function(req, res) {
+  res.render(__dirname + '/www/views/notifications');
 });
 
 // Define/initialize our global vars
@@ -68,10 +119,6 @@ app.post('/add/:item', function(req, res) {
   io.emit('new note', data);
   insertNote(data);
   res.json(data);
-});
-
-app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/www/views/index.html');
 });
 
 function consultarNotas(socket){
