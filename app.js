@@ -21,19 +21,19 @@ app.use(expressLayouts);
 
 //config db connection
 var db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'mysql_giecom'
+	host: 'localhost',
+	user: 'root',
+	password: 'root',
+	database: 'mysql_giecom'
 });
 
 // Log any errors connected to the db
 db.connect(function(err) {
-  if (err) {
-    console.log(err)
-  } else {
-    console.log("Base de datos conectada.");
-  }
+	if (err) {
+		console.log(err)
+	} else {
+		console.log("Base de datos conectada.");
+	}
 });
 
 
@@ -42,114 +42,164 @@ db.connect(function(err) {
                           RUTAS
    ____________________________________________________________________________
 */
-
+/*
+  GET: Pagina principal
+  dashboard
+ */
 app.get('/', function(req, res) {
-  //res.sendFile(__dirname + '/www/views/index.html');
-  //res.render(__dirname + '/www/dashboard',{ layout: 'layout' });
-  res.render(__dirname + '/www/views/dashboard');
+	//res.render(__dirname + '/www/dashboard',{ layout: 'layout' });
+	res.render(__dirname + '/www/views/dashboard');
 });
 
+/*
+  GET: Menu de usuario
+  user
+ */
 app.get('/user', function(req, res) {
-  res.render(__dirname + '/www/views/user');
+	res.render(__dirname + '/www/views/user');
 });
 
+/*
+  GET: Menu de tablas
+  table
+ */
 app.get('/table', function(req, res) {
-  res.render(__dirname + '/www/views/table');
+	res.render(__dirname + '/www/views/table');
 });
 
+/*
+  GET: Menu de typography
+  typography
+ */
 app.get('/typography', function(req, res) {
-  res.render(__dirname + '/www/views/typography');
+	res.render(__dirname + '/www/views/typography');
 });
 
+/*
+  GET: Menu de iconos
+  icons
+ */
 app.get('/icons', function(req, res) {
-  res.render(__dirname + '/www/views/icons');
+	res.render(__dirname + '/www/views/icons');
 });
 
+/*
+  GET: Menu de mapas
+  maps
+ */
 app.get('/maps', function(req, res) {
-  res.render(__dirname + '/www/views/maps');
+	res.render(__dirname + '/www/views/maps');
 });
 
-app.get('/template', function(req, res) {
-  res.render(__dirname + '/www/views/template');
-});
-
+/*
+  GET: Menu de notificationes
+  notifications
+ */
 app.get('/notifications', function(req, res) {
-  res.render(__dirname + '/www/views/notifications');
+	res.render(__dirname + '/www/views/notifications');
 });
 
+/*
+  GET: Menu de listado de registros
+  list
+ */
 app.get('/list', function(req, res) {
-  res.render(__dirname + '/www/views/list');
+	res.render(__dirname + '/www/views/list');
 });
 
+
+/* _____________________________________________________________________________
+                                SocketIO
+   _____________________________________________________________________________
+*/
 // Define/initialize our global vars
-var notes = [];
-var isInitNotes = false;
-var socketCount = 0;
+var notes = []; //Todas las notas registradas
+var socketCount = 0; // Cantidad de usuarios conectados
 
 io.sockets.on('connection', function(socket) {
-  // Socket has connected, increase socket count
-  socketCount++;
-  // Let all sockets know how many are connected
-  io.sockets.emit('users connected', socketCount);
+	// Socket has connected, increase socket count
+	socketCount++;
+	// Let all sockets know how many are connected
+	io.sockets.emit('users connected', socketCount);
 
-  socket.on('disconnect', function() {
-    // Decrease the socket count on a disconnect, emit
-    socketCount--;
-    io.sockets.emit('users connected', socketCount)
-  });
+	socket.on('disconnect', function() {
+		// Decrease the socket count on a disconnect, emit
+		socketCount--;
+		io.sockets.emit('users connected', socketCount)
+	});
 
-  socket.on('new note', function(data) {
-    // New note added, push to all sockets and insert into db
-    notes.push(data);
-    io.sockets.emit('new note', data);
-    // Use node's db injection format to filter incoming data
-    insertNote(data);
-  });
+	socket.on('new note', function(data) {
+		// New note added, push to all sockets and insert into db
+		notes.push(data);
+		io.sockets.emit('new note', data);
+		// Use node's db injection format to filter incoming data
+		insertNote(data);
+	});
 
-  consultarNotas(socket);
+	//Apenas se un cliente se conecta, se le envian todas las notas disponibles
+	consultarNotas(socket);
 });
 
 io.on('connection', function(socket) {
-  socket.on('chat message', function(msg) {
-    io.emit('chat message', msg);
-  });
+	socket.on('chat message', function(msg) {
+		io.emit('chat message', msg);
+	});
 });
 
+/*
+Insertar nota en la base de datos
+Luego se emite la nota insertada a todos los clientes activos
+Despues se envia un json al cliente que realiza la solicitud post
+*/
 app.post('/add/:item', function(req, res) {
-  var data = req.params['item'];
-  data = {
-    note: data
-  };
-  io.emit('new note', data);
-  insertNote(data);
-  res.json(data);
+	var data = req.params['item'];
+	data = {
+		note: data
+	};
+	if (insertNote(data)) { //Si se inserta correctamente entonces se emite a los clientes conectados el nuevo dato
+		io.emit('new note', data);
+		res.json(data);
+	} else {
+		res.json({
+			error: 'no se pudo insertar el valor'
+		});
+	}
 });
 
-function consultarNotas(socket){
-    notes = [];
-    db.query('SELECT * FROM notes')
-        .on('result', function(data) {
-          // Push results onto the notes array
-          notes.push(data)
-        })
-        .on('end', function() {
-          // Only emit notes after query has been completed
-          socket.emit('initial notes', notes)
-        });
-}
-
-function insertNote(data){
-  try {
-    db.query('INSERT INTO notes (note) VALUES (?)', data.note);
-  }catch(err) {
-    console.log("Error al insertar Data en la database. " + err);
-  }
+/*
+Consulta todas las notas y las emite un arreglo json a todas los clientes activos
+*/
+function consultarNotas(socket) {
+	notes = [];
+	db.query('SELECT * FROM notes')
+		.on('result', function(data) {
+			// Push results onto the notes array
+			notes.push(data)
+		})
+		.on('end', function() {
+			// Only emit notes after query has been completed
+			socket.emit('initial notes', notes)
+		});
 }
 
 /*
-* Listen 3000
-* */
+Insertar una nota en la base de datos
+return true si la operacion fue exitosa
+*/
+function insertNote(data) {
+	try {
+		db.query('INSERT INTO notes (note) VALUES (?)', data.note);
+		return true;
+	} catch (err) {
+		console.log("Error al insertar Data en la database. " + err);
+		return false;
+	}
+}
 
+/*
+ * Escuchador
+ * Listen 3000
+ * */
 http.listen(3000, function() {
-  console.log('listening on *:3000');
+	console.log('listening on *:3000');
 });
