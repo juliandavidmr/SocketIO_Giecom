@@ -11,12 +11,17 @@
                 Creative Tim
             </a>
         </div>
-
         <ul class="nav">
             <li class="<%= (activo == 'dashboard')? 'active': '' %>">
                 <a href="/">
                     <i class="pe-7s-graph"></i>
                     <p>Dashboard</p>
+                </a>
+            </li>
+            <li class="<%= (activo == 'list')? 'active': '' %>">
+                <a href="/list">
+                    <i class="pe-7s-graph"></i>
+                    <p>List</p>
                 </a>
             </li>
             <li class="<%= (activo == 'user')? 'active': '' %>">
@@ -58,7 +63,8 @@
             <li class="active-pro">
                 <a href="upgrade">
                     <i class="pe-7s-rocket"></i>
-                    <p>Upgrade to PRO</p>
+                    <!-- usersConnected Muestra los usuarios online -->
+                    <p id="usersConnected"></p>
                 </a>
             </li>
         </ul>

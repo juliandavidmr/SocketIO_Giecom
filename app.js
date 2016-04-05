@@ -77,6 +77,10 @@ app.get('/notifications', function(req, res) {
   res.render(__dirname + '/www/views/notifications');
 });
 
+app.get('/list', function(req, res) {
+  res.render(__dirname + '/www/views/list');
+});
+
 // Define/initialize our global vars
 var notes = [];
 var isInitNotes = false;
