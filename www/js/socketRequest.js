@@ -14,14 +14,15 @@ $(document).ready(function() {
 		for (var i = 0; i < data.length; i++) {
 			// We store html as a var then add to DOM after for efficiency
 			//html += '<li class=list-group-item >' + data[i].note + '</li>'
-			html += '<tr><td> '+(i+1)+' </td> <td> '+data[i].note+' </td> </tr>';
+			html += jsonToDataHtml(i+1, data[i]);
 		}
     cantidad = data.length;
 		$('#notes').html(html)
 	});
 
   socket.on('new note', function(data) {
-    $('#notes').append('<tr><td> '+(cantidad++)+' </td> <td> '+data.note+' </td> </tr>');
+		//prepend apila el dato en la parte de arriba
+		  $('#notes').prepend(jsonToDataHtml(cantidad++, data));
   });
 
 	socket.on('users connected', function(data) {
@@ -31,7 +32,13 @@ $(document).ready(function() {
 	$('#addData_Btn').click(function() {
 		console.log(">>: " + $('#textData_Input').val());
 		socket.emit('new note', {
-			note: $('#textData_Input').val()
+			dato: $('#textData_Input').val()
 		});
 	});
+
+	function jsonToDataHtml(cont, data) {
+		var html = '<tr><td>'+ (cont) +' </td><td> '+ data.dato + '</td><td>'+ moment(data.insertDatetime).fromNow() + '</td></tr>';
+		return html;
+	}
+
 })

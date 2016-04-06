@@ -6,7 +6,13 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mysql = require('mysql');
-var expressLayouts = require('express-ejs-layouts')
+var expressLayouts = require('express-ejs-layouts');
+var bodyParser = require('body-parser');
+
+//app.use(bodyParser());
+app.use(bodyParser.urlencoded({
+	extended: false
+}))
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
@@ -27,15 +33,27 @@ var db = mysql.createConnection({
 	database: 'mysql_giecom'
 });
 
-// Log any errors connected to the db
+/*
+Log any errors connected to the db
+Conectar a la base de datos
+*/
 db.connect(function(err) {
 	if (err) {
-		console.log(err)
+		console.log("ERROR al conectar base de datos, error: "+err)
 	} else {
 		console.log("Base de datos conectada.");
 	}
 });
 
+/*
+Realizar un query de prueba para confirmar que se ha efectuado
+ la conexion exitosamente.
+*/
+db.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+  if (err) throw err;
+
+  console.log('Conexion verificada: ', rows[0].solution == '2'? 'OK': 'Fallido');
+});
 
 
 /* ____________________________________________________________________________
@@ -56,6 +74,7 @@ app.get('/', function(req, res) {
   user
  */
 app.get('/user', function(req, res) {
+	console.log("usuario: " + req.user);
 	res.render(__dirname + '/www/views/user');
 });
 
@@ -156,14 +175,8 @@ app.post('/add/:item', function(req, res) {
 	data = {
 		note: data
 	};
-	if (insertNote(data)) { //Si se inserta correctamente entonces se emite a los clientes conectados el nuevo dato
-		io.emit('new note', data);
-		res.json(data);
-	} else {
-		res.json({
-			error: 'no se pudo insertar el valor'
-		});
-	}
+	insertNote(data) //Si se inserta correctamente entonces se emite a los clientes conectados el nuevo dato
+	res.json(data); //Se retorna el varlo
 });
 
 /*
@@ -171,7 +184,7 @@ Consulta todas las notas y las emite un arreglo json a todas los clientes activo
 */
 function consultarNotas(socket) {
 	notes = [];
-	db.query('SELECT * FROM notes')
+	db.query('SELECT * FROM Datos ORDER BY updateDatetime DESC')
 		.on('result', function(data) {
 			// Push results onto the notes array
 			notes.push(data)
@@ -187,13 +200,19 @@ Insertar una nota en la base de datos
 return true si la operacion fue exitosa
 */
 function insertNote(data) {
-	try {
-		db.query('INSERT INTO notes (note) VALUES (?)', data.note);
+	db.query('INSERT INTO Datos (dato) VALUES (?)', [data.note], function(err, results) {
+		if (err) {
+			console.log("Error:" + err);
+			return false;
+		}
+		//La operacion insert fue realizada exitosamente,
+		//se procede a emitir el resultado a los clientes
+		//results: {"fieldCount":0,"affectedRows":1,"insertId":56,"serverStatus":2,"warningCount":0,"message":"","protocol41":true,"changedRows":0}
+		io.emit('new note', data);
+
+		console.log((results.affectedRows) + " rows affected");
 		return true;
-	} catch (err) {
-		console.log("Error al insertar Data en la database. " + err);
-		return false;
-	}
+	});
 }
 
 /*
