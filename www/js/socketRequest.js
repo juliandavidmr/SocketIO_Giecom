@@ -13,7 +13,6 @@ $(document).ready(function() {
 		var html = '';
 		for (var i = 0; i < data.length; i++) {
 			// We store html as a var then add to DOM after for efficiency
-			//html += '<li class=list-group-item >' + data[i].note + '</li>'
 			html += jsonToDataHtml(i+1, data[i]);
 		}
     cantidad = data.length;
