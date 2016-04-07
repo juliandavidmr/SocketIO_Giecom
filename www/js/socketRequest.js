@@ -36,7 +36,11 @@ $(document).ready(function() {
 	});
 
 	function jsonToDataHtml(cont, data) {
-		var html = '<tr><td>'+ (cont) +' </td><td> '+ data.dato + '</td><td>'+ moment(data.insertDatetime).fromNow() + '</td></tr>';
+		if(data.note) {
+			var html = '<tr><td> '+ data.note + '</td><td>'+ moment(data.insertDatetime).fromNow() + '</td></tr>';	
+		} else {
+			var html = '<tr><td> '+ data.dato + '</td><td>'+ moment(data.insertDatetime).fromNow() + '</td></tr>';
+		}
 		return html;
 	}
 

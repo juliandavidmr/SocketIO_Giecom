@@ -30,7 +30,7 @@ var db = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
 	password: 'root',
-	database: 'mysql_giecom'
+	database: 'bd_sensor'
 });
 
 /*
@@ -39,7 +39,7 @@ Conectar a la base de datos
 */
 db.connect(function(err) {
 	if (err) {
-		console.log("ERROR al conectar base de datos, error: "+err)
+		console.log("ERROR al conectar base de datos, error: " + err)
 	} else {
 		console.log("Base de datos conectada.");
 	}
@@ -50,9 +50,9 @@ Realizar un query de prueba para confirmar que se ha efectuado
  la conexion exitosamente.
 */
 db.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-  if (err) throw err;
+	if (err) throw err;
 
-  console.log('Conexion verificada: ', rows[0].solution == '2'? 'OK': 'Fallido');
+	console.log('Conexion verificada: ', rows[0].solution == '2' ? 'OK' : 'Fallido');
 });
 
 
@@ -157,6 +157,7 @@ io.sockets.on('connection', function(socket) {
 
 	//Apenas se un cliente se conecta, se le envian todas las notas disponibles
 	consultarNotas(socket);
+	//var myVar = setInterval(consultarNotas(socket), 1000);
 });
 
 io.on('connection', function(socket) {
@@ -184,10 +185,10 @@ Consulta todas las notas y las emite un arreglo json a todas los clientes activo
 */
 function consultarNotas(socket) {
 	notes = [];
-	db.query('SELECT * FROM Datos ORDER BY updateDatetime DESC')
+	db.query('SELECT * FROM Dato ORDER BY updateDate DESC')
 		.on('result', function(data) {
 			// Push results onto the notes array
-			notes.push(data)
+			notes.push(data);
 		})
 		.on('end', function() {
 			// Only emit notes after query has been completed

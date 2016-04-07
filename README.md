@@ -13,6 +13,8 @@ Monitoreo en *tiempo real* de varios tipos de sensores.
 * [ejs] - Javascript embebido en templates.
 * [angularjs] - Maquetado de Frontend
 * [momentjs] - Tratamiento de fechas en JavaScript.
+* [node mysql] - Gestor de bases de datos
+* [bootstrap] - Estilos visuales
 
 ### Instalación
 
@@ -40,3 +42,5 @@ $ node app
    [socket.io]: <http://socket.io>
    [ejs]: <https://github.com/tj/ejs>
    [momentjs]: <http://momentjs.com/>
+   [node mysql]: <https://github.com/felixge/node-mysql>
+   [Bootstrap]: <http://getbootstrap.com/>
