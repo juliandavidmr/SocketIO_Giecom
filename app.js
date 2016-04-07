@@ -155,9 +155,10 @@ io.sockets.on('connection', function(socket) {
 		insertNote(data);
 	});
 
-	//Apenas se un cliente se conecta, se le envian todas las notas disponibles
-	consultarNotas(socket);
-	//var myVar = setInterval(consultarNotas(socket), 1000);
+	//Apenas se un cliente se conecta, se le envian todas los datos de los sensores y los capturados por estos
+	consultarDatosSensores(socket);
+	getSensores(socket);
+	//var myVar = setInterval(consultarDatosSensor(socket), 1000);
 });
 
 io.on('connection', function(socket) {
@@ -180,12 +181,18 @@ app.post('/add/:item', function(req, res) {
 	res.json(data); //Se retorna el varlo
 });
 
+
+
+/* ____________________________________________________________________________
+                          				MYSQL
+   ____________________________________________________________________________
+*/
 /*
 Consulta todas las notas y las emite un arreglo json a todas los clientes activos
 */
-function consultarNotas(socket) {
+function consultarDatosSensores(socket) {
 	notes = [];
-	db.query('SELECT * FROM Dato ORDER BY updateDate DESC')
+	db.query('SELECT * FROM Dato INNER JOIN Sensor ON Sensor.idSensor = Dato.fk_idSensor ORDER BY Sensor.updateDate DESC')
 		.on('result', function(data) {
 			// Push results onto the notes array
 			notes.push(data);
@@ -195,6 +202,42 @@ function consultarNotas(socket) {
 			socket.emit('initial notes', notes)
 		});
 }
+
+
+/*
+Consulta todas los datos pertenecientes a un sensor
+y las emite en arreglo json a todas los clientes activos
+*/
+function getBySensor(socket, idSensor) {
+	notes = [];
+	db.query('SELECT * FROM Dato INNER JOIN Sensor ON Sensor.idSensor = Dato.fk_idSensor AND Sensor.idSensor = ? ORDER BY Sensor.updateDate DESC', [idSensor])
+		.on('result', function(data) {
+			// Push results onto the notes array
+			notes.push(data);
+		})
+		.on('end', function() {
+			// Only emit notes after query has been completed
+			socket.emit('initial notes', notes)
+		});
+}
+
+/*
+Consulta todos los sensores
+y emite en un arreglo json a todas los clientes activos
+*/
+function getSensores(socket) {
+	var allSensors = []; //Todos los sensores
+	db.query('SELECT * FROM Sensor ORDER BY Sensor.NombreSensor')
+		.on('result', function(data) {
+			// Push results onto the notes array
+			allSensors.push(data);
+		})
+		.on('end', function() {
+			// Only emit allSensors after query has been completed
+			socket.emit('sensores', allSensors)
+		});
+}
+
 
 /*
 Insertar una nota en la base de datos
