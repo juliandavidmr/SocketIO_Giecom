@@ -64,7 +64,7 @@ $(document).ready(function() {
 		var html = '<tr title="'+ data.Descripcion + '">'
 						+ '<td>'+ data.Dato
 						+ '</td><td> '+ data.NombreSensor
-						+ '</td><td>'+ moment(data.insertDatetime).fromNow()
+						+ '</td><td>'+ moment(data.insertDate).fromNow()
 						+ '</td></tr>';
 		return html;
 	}

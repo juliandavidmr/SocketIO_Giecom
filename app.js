@@ -8,11 +8,15 @@ var io = require('socket.io')(http);
 var mysql = require('mysql');
 var expressLayouts = require('express-ejs-layouts');
 var bodyParser = require('body-parser');
+var routes = require('./routes/index')
 
 //app.use(bodyParser());
 app.use(bodyParser.urlencoded({
 	extended: false
 }))
+
+//Rutas
+app.use('/', routes);
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
@@ -36,76 +40,12 @@ var knex = require('knex')({
 });
 
 
-/* ____________________________________________________________________________
-                          RUTAS
-   ____________________________________________________________________________
-*/
-/*
-  GET: Pagina principal
-  dashboard
- */
-app.get('/', function(req, res) {
-	//res.render(__dirname + '/www/dashboard',{ layout: 'layout' });
-	res.render(__dirname + '/www/views/dashboard');
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Ruta no encontrada');
+  err.status = 404;
+  next(err);
 });
-
-/*
-  GET: Menu de usuario
-  user
- */
-app.get('/user', function(req, res) {
-	console.log("usuario: " + req.user);
-	res.render(__dirname + '/www/views/user');
-});
-
-/*
-  GET: Menu de tablas
-  table
- */
-app.get('/table', function(req, res) {
-	res.render(__dirname + '/www/views/table');
-});
-
-/*
-  GET: Menu de typography
-  typography
- */
-app.get('/typography', function(req, res) {
-	res.render(__dirname + '/www/views/typography');
-});
-
-/*
-  GET: Menu de iconos
-  icons
- */
-app.get('/icons', function(req, res) {
-	res.render(__dirname + '/www/views/icons');
-});
-
-/*
-  GET: Menu de mapas
-  maps
- */
-app.get('/maps', function(req, res) {
-	res.render(__dirname + '/www/views/maps');
-});
-
-/*
-  GET: Menu de notificationes
-  notifications
- */
-app.get('/notifications', function(req, res) {
-	res.render(__dirname + '/www/views/notifications');
-});
-
-/*
-  GET: Menu de listado de registros
-  list
- */
-app.get('/list', function(req, res) {
-	res.render(__dirname + '/www/views/list');
-});
-
 
 /* _____________________________________________________________________________
                                 SocketIO
@@ -160,7 +100,6 @@ app.post('/add/:item', function(req, res) {
 	insertNote(data) //Si se inserta correctamente entonces se emite a los clientes conectados el nuevo dato
 	res.json(data); //Se retorna el varlo
 });
-
 
 
 /* ____________________________________________________________________________
