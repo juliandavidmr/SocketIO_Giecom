@@ -15,6 +15,7 @@ Monitoreo en *tiempo real* de varios tipos de sensores.
 * [momentjs] - Tratamiento de fechas en JavaScript.
 * [node mysql] - Gestor de bases de datos
 * [bootstrap] - Estilos visuales
+* [knexjs] - Constructor avanzado de query
 
 ### Instalación
 
@@ -44,3 +45,4 @@ $ node app
    [momentjs]: <http://momentjs.com/>
    [node mysql]: <https://github.com/felixge/node-mysql>
    [Bootstrap]: <http://getbootstrap.com/>
+   [knexjs]: <http://knexjs.org/>

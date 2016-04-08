@@ -25,34 +25,14 @@ app.use(express.static('www'));
 app.set('layout', false); // defaults to 'layout'
 app.use(expressLayouts);
 
-//config db connection
-var db = mysql.createConnection({
-	host: 'localhost',
-	user: 'root',
-	password: 'root',
-	database: 'bd_sensor'
-});
-
-/*
-Log any errors connected to the db
-Conectar a la base de datos
-*/
-db.connect(function(err) {
-	if (err) {
-		console.log("ERROR al conectar base de datos, error: " + err)
-	} else {
-		console.log("Base de datos conectada.");
-	}
-});
-
-/*
-Realizar un query de prueba para confirmar que se ha efectuado
- la conexion exitosamente.
-*/
-db.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-	if (err) throw err;
-
-	console.log('Conexion verificada: ', rows[0].solution == '2' ? 'OK' : 'Fallido');
+var knex = require('knex')({
+  client: 'mysql',
+  connection: {
+    host     : '127.0.0.1',
+    user     : 'root',
+    password : 'root',
+    database : 'bd_sensor'
+  }
 });
 
 
@@ -191,16 +171,18 @@ app.post('/add/:item', function(req, res) {
 Consulta todas las notas y las emite un arreglo json a todas los clientes activos
 */
 function consultarDatosSensores(socket) {
-	notes = [];
-	db.query('SELECT * FROM Dato INNER JOIN Sensor ON Sensor.idSensor = Dato.fk_idSensor ORDER BY Sensor.updateDate DESC')
-		.on('result', function(data) {
-			// Push results onto the notes array
-			notes.push(data);
-		})
-		.on('end', function() {
-			// Only emit notes after query has been completed
-			socket.emit('initial notes', notes)
-		});
+	knex('Dato')
+  .join('Sensor', 'Dato.fk_idSensor', '=', 'Sensor.idSensor')
+  .select('*')
+	.limit(10)
+	.orderBy('NombreSensor', 'desc')
+	.then(function(rows) {
+		socket.emit('initial notes', rows)
+		return rows;
+	})
+	.catch(function(error) {
+		console.error(error)
+	});
 }
 
 
@@ -209,7 +191,7 @@ Consulta todas los datos pertenecientes a un sensor
 y las emite en arreglo json a todas los clientes activos
 */
 function getBySensor(socket, idSensor) {
-	notes = [];
+	/*notes = [];
 	db.query('SELECT * FROM Dato INNER JOIN Sensor ON Sensor.idSensor = Dato.fk_idSensor AND Sensor.idSensor = ? ORDER BY Sensor.updateDate DESC', [idSensor])
 		.on('result', function(data) {
 			// Push results onto the notes array
@@ -218,7 +200,7 @@ function getBySensor(socket, idSensor) {
 		.on('end', function() {
 			// Only emit notes after query has been completed
 			socket.emit('initial notes', notes)
-		});
+		});*/
 }
 
 /*
@@ -226,23 +208,23 @@ Consulta todos los sensores
 y emite en un arreglo json a todas los clientes activos
 */
 function getSensores(socket) {
-	var allSensors = []; //Todos los sensores
-	db.query('SELECT * FROM Sensor ORDER BY Sensor.NombreSensor')
-		.on('result', function(data) {
-			// Push results onto the notes array
-			allSensors.push(data);
-		})
-		.on('end', function() {
-			// Only emit allSensors after query has been completed
-			socket.emit('sensores', allSensors)
-		});
+	knex.select('*').from('Sensor')
+  .limit(10)
+	.orderBy('NombreSensor', 'desc')
+  .then(function(rows) {
+		socket.emit('sensores', rows)
+    return rows;
+  })
+  .catch(function(error) {
+    console.error(error)
+  });
 }
 
 
 /*
 Insertar una nota en la base de datos
 return true si la operacion fue exitosa
-*/
+
 function insertNote(data) {
 	db.query('INSERT INTO Datos (dato) VALUES (?)', [data.note], function(err, results) {
 		if (err) {
@@ -257,7 +239,7 @@ function insertNote(data) {
 		console.log((results.affectedRows) + " rows affected");
 		return true;
 	});
-}
+}*/
 
 /*
  * Escuchador

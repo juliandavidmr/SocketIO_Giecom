@@ -62,7 +62,7 @@ $(document).ready(function() {
 	*/
 	function jsonToHtml_DatosSensores(data) {
 		var html = '<tr title="'+ data.Descripcion + '">'
-						+'<td>'+ data.Dato
+						+ '<td>'+ data.Dato
 						+ '</td><td> '+ data.NombreSensor
 						+ '</td><td>'+ moment(data.insertDatetime).fromNow()
 						+ '</td></tr>';
@@ -73,10 +73,12 @@ $(document).ready(function() {
 	Convierte un json de un sensor a codigo html
 	*/
 	function jsonToHtml_Sensores(data) {
-		var html = '<div class="col-md-2">' +
-									'<button class="btn btn-default btn-block" onclick="demo.showNotification(top,right)">'+ data.NombreSensor +
-									'</button>'+
-								'</div>';
+		var html = '<div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">'+
+									'<div class="font-icon-detail">'+
+										'<i class="pe-7s-edit"></i>'+
+										'<input type="button" value="' + data.NombreSensor + '" onclick="">'+
+									'</div>'
+								+'</div>';
 		return html;
 	}
 
