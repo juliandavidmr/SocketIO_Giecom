@@ -14,7 +14,7 @@ var dir = '../www/';
  */
 router.get('/', function(req, res) {
 	//res.render(dir + 'dashboard',{ layout: 'layout' });
-	res.render( dir + 'views/dashboard');
+	res.render(dir + 'views/dashboard');
 });
 
 /*

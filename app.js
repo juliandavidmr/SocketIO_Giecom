@@ -6,9 +6,14 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mysql = require('mysql');
-var expressLayouts = require('express-ejs-layouts');
 var bodyParser = require('body-parser');
-var routes = require('./routes/index')
+
+//Conexion con la base de datos
+var knex = require('./db/connection');
+
+var routes_index = require('./routes/index');
+var routes_sensors = require('./routes/sensors');
+
 
 //app.use(bodyParser());
 app.use(bodyParser.urlencoded({
@@ -16,7 +21,8 @@ app.use(bodyParser.urlencoded({
 }))
 
 //Rutas
-app.use('/', routes);
+app.use('/', routes_index);
+app.use('/sensor', routes_sensors);
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
@@ -27,18 +33,6 @@ app.use(express.static('www'));
 
 //layout
 app.set('layout', false); // defaults to 'layout'
-app.use(expressLayouts);
-
-var knex = require('knex')({
-  client: 'mysql',
-  connection: {
-    host     : '127.0.0.1',
-    user     : 'root',
-    password : 'root',
-    database : 'bd_sensor'
-  }
-});
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
