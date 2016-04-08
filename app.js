@@ -24,12 +24,16 @@ app.use(bodyParser.urlencoded({
 app.use('/', routes_index);
 app.use('/sensor', routes_sensors);
 
+//Crear variable moment como local para todas las plantillas
+app.locals.moment = require('moment');
+
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
 //folders static
 app.use(express.static('bower_components'));
 app.use(express.static('www'));
+app.use(express.static('www/assets'));
 
 //layout
 app.set('layout', false); // defaults to 'layout'

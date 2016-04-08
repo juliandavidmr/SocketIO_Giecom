@@ -11,3 +11,18 @@ module.exports.getSensores = function(callback) {
     console.error("ERROR " + error)
   });
 };
+
+
+module.exports.getSensorById = function(idSensor, callback) {
+  knex.where('idSensor', '=', idSensor)
+  .select('*')
+  .from('Sensor')
+  .innerJoin('TipoSensor', 'TipoSensor.idTipoSensor', 'Sensor.fk_idTipoSensor')
+  .limit(1)
+  .then(function(row) {
+    callback(row);
+  })
+  .catch(function(error) {
+    console.error("ERROR " + error)
+  });
+};

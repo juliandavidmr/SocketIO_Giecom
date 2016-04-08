@@ -1,4 +1,4 @@
-<div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
+<div class="sidebar" data-color="purple" data-image="/img/sidebar-5.jpg">
 
     <!--
       Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
@@ -28,6 +28,12 @@
                 <a href="/user">
                     <i class="pe-7s-user"></i>
                     <p>User Profile</p>
+                </a>
+            </li>
+            <li class="<%= (activo == 'sensores')? 'active': '' %>">
+                <a href="/sensor">
+                    <i class="pe-7s-loop"></i>
+                    <p>Sensores</p>
                 </a>
             </li>
             <li class="<%= (activo == 'table')? 'active': '' %>">

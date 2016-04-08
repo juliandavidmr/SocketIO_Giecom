@@ -4,7 +4,7 @@
     <body>
 
         <div class="wrapper">
-            <%- include('../partials/sidemenu', {activo: 'table'}) %>
+            <%- include('../partials/sidemenu', {activo: 'sensores'}) %>
             <div class="main-panel">
                 <%- include ../partials/nav %>
                 <div class="content">
@@ -37,6 +37,9 @@
                                                         <td><%= sensores[i].Maximo %></td>
                                                         <td><%= sensores[i].Minimo %></td>
                                                         <td><%= sensores[i].Altura %></td>
+                                                        <td>
+                                                            <a href="/sensor/show/<%= sensores[i].idSensor %>">VER</a>
+                                                        </td>
                                                     </tr>
                                                 <% } %>
                                             </tbody>
