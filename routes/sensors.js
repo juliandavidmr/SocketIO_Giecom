@@ -3,13 +3,13 @@
    ____________________________________________________________________________
 */
 
-var express = require('express');
-var router = express.Router();
-var moment = require('moment');
-var db = require('../db/db_sensor');
+'use strict';
 
-var dir = '../www/';
-moment.locale('es');
+const express = require('express');
+const router = express.Router();
+const db = require('../db/db_sensor');
+
+const dir = '../www/';
 
 /*
   GET: Listado de sensores
@@ -29,13 +29,12 @@ router.get('/', function(req, res, next) {
   list a sensor
  */
 router.get('/show/:idSensor', function(req, res, next) {
-	var idSensor = req.params['idSensor'];
+	const idSensor = req.params['idSensor'];
 	db.getSensorById(idSensor, function(row) {
 		res.render(dir + 'views/sensors/show', {
 			sensor: row[0]
 		});
 	});
 });
-
 
 module.exports = router;

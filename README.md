@@ -19,13 +19,13 @@ Monitoreo en *tiempo real* de varios tipos de sensores.
 
 ### Instalación
 
-Debes tener instalado [node.js] en tu equipo.
+Debes tener instalado [node.js] (superior a la 5.0) en tu equipo.
 
 ```sh
 $ git clone https://github.com/juliandavidmr/SocketIO_Giecom
 $ cd SocketIO_Giecom
 $ npm install
-$ node app
+$ nodemon
 ```
    [dill]: <https://github.com/joemccann/dillinger>
    [john gruber]: <http://daringfireball.net>

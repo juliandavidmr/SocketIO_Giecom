@@ -3,11 +3,14 @@
    ____________________________________________________________________________
 */
 
-var express = require('express');
-var router = express.Router();
-var db_sensor = require('../db/db_sensor');
+const express = require('express');
+const router = express.Router();
+const db_sensor = require('../db/db_sensor');
+const db_dato = require('../db/db_dato');
 
-var dir = '../www/';
+console.log(db_dato.area);
+
+const dir = '../www/';
 
 /*
   GET: Pagina principal

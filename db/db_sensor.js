@@ -37,7 +37,6 @@ module.exports.getDatosSensores = function(callback) {
   .innerJoin('Sensor', 'Sensor.idSensor', 'Dato.fk_idSensor')
   .limit(100)
   .then(function(rows) {
-    console.log("fila: " + JSON.stringify(rows[0]));
     callback(rows);
   })
   .catch(function(error) {

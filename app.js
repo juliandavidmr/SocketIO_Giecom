@@ -1,18 +1,20 @@
 /**
  * Created by julian on 9/03/16.
  */
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var mysql = require('mysql');
-var bodyParser = require('body-parser');
 
+'use strict';
+
+const express = require('express');
+const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const mysql = require('mysql');
+const bodyParser = require('body-parser');
 //Conexion con la base de datos
-var db = require('./db/db_sensor');
+const db = require('./db/db_sensor');
 
-var routes_index = require('./routes/index');
-var routes_sensors = require('./routes/sensors');
+const routes_index = require('./routes/index');
+const routes_sensors = require('./routes/sensors');
 
 
 //app.use(bodyParser());
@@ -43,8 +45,8 @@ app.set('layout', false); // defaults to 'layout'
    _____________________________________________________________________________
 */
 // Define/initialize our global vars
-var notes = []; //Todas las notas registradas
-var socketCount = 0; // Cantidad de usuarios conectados
+let notes = []; //Todas las notas registradas
+let socketCount = 0; // Cantidad de usuarios conectados
 
 io.sockets.on('connection', function(socket) {
 	// Socket has connected, increase socket count
@@ -70,7 +72,7 @@ io.sockets.on('connection', function(socket) {
 	Apenas se un cliente se conecta, se le envian todos los datos
 	capturados por los sensores
 	*/
-	db.getDatosSensores(function(rows) {		
+	db.getDatosSensores(function(rows) {
 		io.sockets.emit('initial notes', rows);
 	});
 });
@@ -87,7 +89,7 @@ Luego se emite la nota insertada a todos los clientes activos
 Despues se envia un json al cliente que realiza la solicitud post
 */
 app.post('/add/:item', function(req, res) {
-	var data = req.params['item'];
+	let data = req.params['item'];
 	data = {
 		note: data
 	};
