@@ -31,9 +31,9 @@ module.exports.getSensorById = function(idSensor, callback) {
 
 module.exports.getDatosSensores = function(callback) {
   knex
-  .select('*')
+  .select(['Dato', 'Dato.insertDate', 'Dato.updateDate', 'Sensor.NombreSensor'])
   .from('Dato')
-  .orderBy('Dato.insertDate', 'ASC')
+  .orderBy('Dato.insertDate', 'DESC')
   .innerJoin('Sensor', 'Sensor.idSensor', 'Dato.fk_idSensor')
   .limit(100)
   .then(function(rows) {

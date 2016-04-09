@@ -54,9 +54,11 @@ router.get('/icons', function(req, res) {
 	res.render(dir + 'views/icons');
 });
 
-/*
-  GET: Menu de mapas
-  maps
+/**
+ * Menu de mapas
+ * @param  GET				'/maps'
+ * @param  function		function(req, res
+ * @return view       view/maps
  */
 router.get('/maps', function(req, res) {
 	res.render(dir + 'views/maps');

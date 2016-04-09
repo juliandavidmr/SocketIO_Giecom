@@ -31,9 +31,12 @@ router.get('/', function(req, res, next) {
 router.get('/show/:idSensor', function(req, res, next) {
 	const idSensor = req.params['idSensor'];
 	db.getSensorById(idSensor, function(row) {
-		res.render(dir + 'views/sensors/show', {
-			sensor: row[0]
-		});
+		if (row) {
+			res.render(dir + 'views/sensors/show', {
+				sensor: row[0]
+			});
+		}
+		res.redirect('/list');
 	});
 });
 

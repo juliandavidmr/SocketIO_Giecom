@@ -28,6 +28,7 @@ app.use('/sensor', routes_sensors);
 
 //Crear variable moment como local para todas las plantillas
 app.locals.moment = require('moment');
+app.locals.moment.locale('es');
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
@@ -72,9 +73,7 @@ io.sockets.on('connection', function(socket) {
 	Apenas se un cliente se conecta, se le envian todos los datos
 	capturados por los sensores
 	*/
-	db.getDatosSensores(function(rows) {
-		io.sockets.emit('initial notes', rows);
-	});
+
 });
 
 io.on('connection', function(socket) {
@@ -82,6 +81,20 @@ io.on('connection', function(socket) {
 		io.emit('chat message', msg);
 	});
 });
+
+/**
+ * Consulta database y envia a los clientes cada 2 s
+ * @return {[type]} [description]
+ */
+var watch = function () {
+    console.log("Search data, emitiendo");
+		db.getDatosSensores(function(rows) {
+			//console.log(JSON.stringify(rows));
+			io.sockets.emit('initial notes', rows);
+		});
+    setTimeout(watch,2000);
+}
+watch();
 
 /*
 Insertar nota en la base de datos

@@ -56,7 +56,7 @@ $(document).ready(function() {
 			dato: $('#textData_Input').val()
 		});
 	});
-
+	
 	/*
 	Convierte un json con el dato de un sensor a codigo html
 	*/

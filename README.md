@@ -2,7 +2,7 @@
 Monitoreo en *tiempo real* de varios tipos de sensores.
 
 ### Version
-1.0.0
+1.0.1
 
 ### Tecnologias usadas
 
