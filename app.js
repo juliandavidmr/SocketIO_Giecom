@@ -9,7 +9,7 @@ var mysql = require('mysql');
 var bodyParser = require('body-parser');
 
 //Conexion con la base de datos
-var knex = require('./db/connection');
+var db = require('./db/db_sensor');
 
 var routes_index = require('./routes/index');
 var routes_sensors = require('./routes/sensors');
@@ -37,13 +37,6 @@ app.use(express.static('www/assets'));
 
 //layout
 app.set('layout', false); // defaults to 'layout'
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Ruta no encontrada');
-  err.status = 404;
-  next(err);
-});
 
 /* _____________________________________________________________________________
                                 SocketIO
@@ -73,10 +66,13 @@ io.sockets.on('connection', function(socket) {
 		insertNote(data);
 	});
 
-	//Apenas se un cliente se conecta, se le envian todas los datos de los sensores y los capturados por estos
-	consultarDatosSensores(socket);
-	getSensores(socket);
-	//var myVar = setInterval(consultarDatosSensor(socket), 1000);
+	/*
+	Apenas se un cliente se conecta, se le envian todos los datos
+	capturados por los sensores
+	*/
+	db.getDatosSensores(function(rows) {		
+		io.sockets.emit('initial notes', rows);
+	});
 });
 
 io.on('connection', function(socket) {
@@ -98,85 +94,6 @@ app.post('/add/:item', function(req, res) {
 	insertNote(data) //Si se inserta correctamente entonces se emite a los clientes conectados el nuevo dato
 	res.json(data); //Se retorna el varlo
 });
-
-
-/* ____________________________________________________________________________
-                          				MYSQL
-   ____________________________________________________________________________
-*/
-/*
-Consulta todas las notas y las emite un arreglo json a todas los clientes activos
-*/
-function consultarDatosSensores(socket) {
-	knex('Dato')
-  .join('Sensor', 'Dato.fk_idSensor', '=', 'Sensor.idSensor')
-  .select('*')
-	.limit(10)
-	.orderBy('NombreSensor', 'desc')
-	.then(function(rows) {
-		socket.emit('initial notes', rows)
-		return rows;
-	})
-	.catch(function(error) {
-		console.error(error)
-	});
-}
-
-
-/*
-Consulta todas los datos pertenecientes a un sensor
-y las emite en arreglo json a todas los clientes activos
-*/
-function getBySensor(socket, idSensor) {
-	/*notes = [];
-	db.query('SELECT * FROM Dato INNER JOIN Sensor ON Sensor.idSensor = Dato.fk_idSensor AND Sensor.idSensor = ? ORDER BY Sensor.updateDate DESC', [idSensor])
-		.on('result', function(data) {
-			// Push results onto the notes array
-			notes.push(data);
-		})
-		.on('end', function() {
-			// Only emit notes after query has been completed
-			socket.emit('initial notes', notes)
-		});*/
-}
-
-/*
-Consulta todos los sensores
-y emite en un arreglo json a todas los clientes activos
-*/
-function getSensores(socket) {
-	knex.select('*').from('Sensor')
-  .limit(10)
-	.orderBy('NombreSensor', 'desc')
-  .then(function(rows) {
-		socket.emit('sensores', rows)
-    return rows;
-  })
-  .catch(function(error) {
-    console.error(error)
-  });
-}
-
-
-/*
-Insertar una nota en la base de datos
-return true si la operacion fue exitosa
-
-function insertNote(data) {
-	db.query('INSERT INTO Datos (dato) VALUES (?)', [data.note], function(err, results) {
-		if (err) {
-			console.log("Error:" + err);
-			return false;
-		}
-		//La operacion insert fue realizada exitosamente,
-		//se procede a emitir el resultado a los clientes
-		//results: {"fieldCount":0,"affectedRows":1,"insertId":56,"serverStatus":2,"warningCount":0,"message":"","protocol41":true,"changedRows":0}
-		io.emit('new note', data);
-
-		console.log((results.affectedRows) + " rows affected");
-		return true;
-	});
-}*/
 
 /*
  * Escuchador

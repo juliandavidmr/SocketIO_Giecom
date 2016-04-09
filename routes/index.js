@@ -5,6 +5,7 @@
 
 var express = require('express');
 var router = express.Router();
+var db_sensor = require('../db/db_sensor');
 
 var dir = '../www/';
 
@@ -71,7 +72,11 @@ router.get('/notifications', function(req, res) {
   list
  */
 router.get('/list', function(req, res) {
-	res.render(dir + 'views/list');
+	db_sensor.getSensores(function(rows) {
+		res.render(dir + 'views/list', {
+			sensores: rows
+		});
+	});
 });
 
 

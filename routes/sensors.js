@@ -6,7 +6,7 @@
 var express = require('express');
 var router = express.Router();
 var moment = require('moment');
-var select = require('../db/select');
+var db = require('../db/db_sensor');
 
 var dir = '../www/';
 moment.locale('es');
@@ -16,8 +16,7 @@ moment.locale('es');
   list sensor
  */
 router.get('/', function(req, res, next) {
-	select.getSensores(function(rows) {
-		console.log(rows);
+	db.getSensores(function(rows) {
 		res.render(dir + 'views/sensors/list', {
 			sensores: rows
 		});
@@ -31,7 +30,7 @@ router.get('/', function(req, res, next) {
  */
 router.get('/show/:idSensor', function(req, res, next) {
 	var idSensor = req.params['idSensor'];
-	select.getSensorById(idSensor, function(row) {
+	db.getSensorById(idSensor, function(row) {
 		res.render(dir + 'views/sensors/show', {
 			sensor: row[0]
 		});

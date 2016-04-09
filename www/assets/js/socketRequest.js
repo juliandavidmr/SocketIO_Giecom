@@ -31,7 +31,7 @@ $(document).ready(function() {
 	});
 
 	// Initial set of sensores
-	socket.on('sensores', function(data) {
+/*	socket.on('sensores', function(data) {
 		var html = '';
 		for (var i = 0; i < data.length; i++) {
 			// We store html as a var then add to DOM after for efficiency
@@ -39,7 +39,7 @@ $(document).ready(function() {
 		}
 		console.log(html);
 		$('#sensores').html(html);
-	});
+	});*/
 
   socket.on('new note', function(data) {
 		//prepend apila el dato en la parte de arriba

@@ -40,12 +40,14 @@
                                     </div>
                                     <div class="content all-icons">
                                         <div id="sensores" class="row">
-                                            <!--<div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
-                                                <div class="font-icon-detail">
-                                                    <i class="pe-7s-eyedropper"></i>
-                                                    <input type="text" value="-eyedropper">
-                                                </div>
-                                            </div>-->
+                                            <% for (var i = 0; i < sensores.length; i++) { %>
+                                                <a href="/sensor/show/<%= sensores[i].idSensor %>" class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
+                                                    <div class="font-icon-detail">
+                                                        <i class="pe-7s-eyedropper"></i>
+                                                        <input type="text" value="<%= sensores[i].NombreSensor %>">
+                                                    </div>
+                                                </a>
+                                            <% } %>
                                         </div>
                                     </div>
                                     <div class="content table-responsive table-full-width">
