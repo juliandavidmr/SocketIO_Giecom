@@ -34,7 +34,7 @@ app.locals.moment.locale('es');
 app.set('view engine', 'ejs');
 
 //folders static
-app.use(express.static('bower_components'));
+//app.use(express.static('bower_components'));
 app.use(express.static('www'));
 app.use(express.static('www/assets'));
 
@@ -68,12 +68,6 @@ io.sockets.on('connection', function(socket) {
 		// Use node's db injection format to filter incoming data
 		insertNote(data);
 	});
-
-	/*
-	Apenas se un cliente se conecta, se le envian todos los datos
-	capturados por los sensores
-	*/
-
 });
 
 io.on('connection', function(socket) {

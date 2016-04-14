@@ -11,7 +11,6 @@ Monitoreo en *tiempo real* de varios tipos de sensores.
 * [jQuery] - Libreria javascript para cliente
 * [socket.io] - Gestion de procesos en tiempo real
 * [ejs] - Javascript embebido en templates.
-* [angularjs] - Maquetado de Frontend
 * [momentjs] - Tratamiento de fechas en JavaScript.
 * [node mysql] - Gestor de bases de datos
 * [bootstrap] - Estilos visuales
@@ -27,16 +26,8 @@ $ cd SocketIO_Giecom
 $ npm install
 $ nodemon
 ```
-   [dill]: <https://github.com/joemccann/dillinger>
-   [john gruber]: <http://daringfireball.net>
-   [@thomasfuchs]: <http://twitter.com/thomasfuchs>
-   [df1]: <http://daringfireball.net/projects/markdown/>
-   [marked]: <https://github.com/chjj/marked>
    [node.js]: <http://nodejs.org>
-   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
-   [keymaster.js]: <https://github.com/madrobby/keymaster>
    [jQuery]: <http://jquery.com>
-   [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
    [express]: <http://expressjs.com>
    [AngularJS]: <http://angularjs.org>
    [Gulp]: <http://gulpjs.com>
