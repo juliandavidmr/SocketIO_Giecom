@@ -14,16 +14,13 @@ const bodyParser = require('body-parser');
 const sassMiddleware = require('node-sass-middleware');
 const path = require('path');
 
-
 //Conexion con la base de datos
 const db = require('./db/db_sensor');
 
 const routes_index = require('./routes/index');
 const routes_sensors = require('./routes/sensors');
 
-
 //app.use(bodyParser());
-
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
@@ -35,11 +32,6 @@ app.use(sassMiddleware({
 	outputStyle: 'compressed',
 	prefix: '/prefix' // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
 }));
-
-app.use(bodyParser.urlencoded({
-	extended: false
-}))
-
 
 //Rutas
 app.use('/', routes_index);
@@ -53,11 +45,6 @@ app.locals.moment.locale('es');
 app.set('view engine', 'ejs');
 
 //folders static
-
-//app.use(express.static('bower_components'));
-
-app.use(express.static('bower_components'));
-
 app.use(express.static('www'));
 app.use(express.static('www/assets'));
 
@@ -98,18 +85,12 @@ io.sockets.on('connection', function(socket) {
 	*/
 });
 
-io.on('connection', function(socket) {
-	socket.on('chat message', function(msg) {
-		io.emit('chat message', msg);
-	});
-});
-
 /**
  * Consulta database y envia a los clientes cada 2 s
  * @return {[type]} [description]
  */
 var watch = function () {
-    console.log("Search data, emitiendo");
+    //console.log("Search data, emitiendo");
 		db.getDatosSensores(function(rows) {
 			//console.log(JSON.stringify(rows));
 			io.sockets.emit('initial notes', rows);

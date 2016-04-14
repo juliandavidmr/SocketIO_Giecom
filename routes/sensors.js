@@ -61,7 +61,7 @@ router.post('/register', function(req, res, next) {
 	});
 });
 
-router.get('/prueba', function(req, res, next) {
+router.get('/graficos', function(req, res, next) {
 	db.getSensores(function(rows) {
 		res.render(dir + 'views/sensors/prueba_grafico');
 	});
