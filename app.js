@@ -10,8 +10,11 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
+
 const sassMiddleware = require('node-sass-middleware');
 const path = require('path');
+
+
 //Conexion con la base de datos
 const db = require('./db/db_sensor');
 
@@ -20,6 +23,7 @@ const routes_sensors = require('./routes/sensors');
 
 
 //app.use(bodyParser());
+
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
@@ -31,6 +35,11 @@ app.use(sassMiddleware({
 	outputStyle: 'compressed',
 	prefix: '/prefix' // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
 }));
+
+app.use(bodyParser.urlencoded({
+	extended: false
+}))
+
 
 //Rutas
 app.use('/', routes_index);
@@ -44,7 +53,11 @@ app.locals.moment.locale('es');
 app.set('view engine', 'ejs');
 
 //folders static
+
 //app.use(express.static('bower_components'));
+
+app.use(express.static('bower_components'));
+
 app.use(express.static('www'));
 app.use(express.static('www/assets'));
 
@@ -78,6 +91,11 @@ io.sockets.on('connection', function(socket) {
 		// Use node's db injection format to filter incoming data
 		insertNote(data);
 	});
+
+	/*
+	Apenas se un cliente se conecta, se le envian todos los datos
+	capturados por los sensores
+	*/
 });
 
 io.on('connection', function(socket) {
@@ -90,13 +108,13 @@ io.on('connection', function(socket) {
  * Consulta database y envia a los clientes cada 2 s
  * @return {[type]} [description]
  */
-var watch = function() {
-	//console.log("Search data & emitiendo, " + new Date());
-	db.getDatosSensores(function(rows) {
-		//console.log(JSON.stringify(rows));
-		io.sockets.emit('initial notes', rows);
-	});
-	setTimeout(watch, 2000);
+var watch = function () {
+    console.log("Search data, emitiendo");
+		db.getDatosSensores(function(rows) {
+			//console.log(JSON.stringify(rows));
+			io.sockets.emit('initial notes', rows);
+		});
+    setTimeout(watch,2000);
 }
 watch();
 

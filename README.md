@@ -30,7 +30,7 @@ $ npm install
 $ nodemon
 ```
    [node.js]: <http://nodejs.org>
-   [jQuery]: <http://jquery.com>
+   [jQuery]: <http://jquery.com>   
    [express]: <http://expressjs.com>
    [AngularJS]: <http://angularjs.org>
    [Gulp]: <http://gulpjs.com>

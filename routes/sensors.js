@@ -9,7 +9,7 @@ const express = require('express');
 const router = express.Router();
 const db_sensor = require('../db/db_sensor');
 const db_tiposensor = require('../db/db_tiposensor');
-
+const db = require('../db/db_sensor');
 const dir = '../www/';
 
 /*
@@ -61,7 +61,11 @@ router.post('/register', function(req, res, next) {
 	});
 });
 
-
+router.get('/prueba', function(req, res, next) {
+	db.getSensores(function(rows) {
+		res.render(dir + 'views/sensors/prueba_grafico');
+	});
+});
 
 /*
   GET: Ver un sensor

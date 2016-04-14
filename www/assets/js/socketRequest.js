@@ -19,6 +19,49 @@ $(document).ready(function() {
 		$('#notes').html(html);
 	});
 
+	// Initial set of notes, loop through and add to list
+	socket.on('initial notes', function(data) {
+		var html = '';
+		for (var i = 0; i < data.length; i++) {
+			// We store html as a var then add to DOM after for efficiency
+			html += jsonToHtml_DatosSensores(data[i]);
+		}
+		cantidad = data.length;
+		$('#notes').html(html);
+		 //var l=['1', '2', '3', '4', '5', '6'];
+		 var l =[];
+		 var s1=[], s2=[];
+		 for (var i = 0; i < data.length; i++) {
+			 l.push(data[i].insertDate);
+			 s1.push(data[i].Dato)
+
+		 }
+		new Chartist.Line('#chart1', {
+
+	    labels: l,
+	    series: [
+	      {
+	        data: s1
+	      },{
+					data:[30,56,3,-34,67,45,34]
+				}
+	    ]
+	  });
+
+	});
+
+	// Initial set of sensores
+/*	socket.on('sensores', function(data) {
+		var html = '';
+		for (var i = 0; i < data.length; i++) {
+			// We store html as a var then add to DOM after for efficiency
+			html += jsonToHtml_Sensores(data[i]);
+		}
+		console.log(html);
+		$('#sensores').html(html);
+	});*/
+
+
   socket.on('new note', function(data) {
 		//prepend apila el dato en la parte de arriba
 		  $('#notes').prepend(jsonToHtml_DatosSensores(data));
