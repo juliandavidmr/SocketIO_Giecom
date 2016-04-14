@@ -90,7 +90,14 @@ var watch = function () {
     console.log("Search data, emitiendo");
 		db.getDatosSensores(function(rows) {
 			//console.log(JSON.stringify(rows));
-			io.sockets.emit('initial notes', rows);
+			db.getTipoSensores(function(datos){
+				const data = {
+					datosensores:rows,
+					tiposensores:datos
+				}
+
+			io.sockets.emit('initial notes', data);
+		});
 		});
     setTimeout(watch,2000);
 }

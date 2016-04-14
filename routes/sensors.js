@@ -27,8 +27,11 @@ router.get('/', function(req, res, next) {
   list sensor
  */
 router.get('/prueba', function(req, res, next) {
-	db.getSensores(function(rows) {
-		res.render(dir + 'views/sensors/prueba_grafico');
+
+	db.getTipoSensores(function(rows) {
+		res.render(dir + 'views/sensors/prueba_grafico',{
+			tiposensores: rows
+		});
 	});
 });
 

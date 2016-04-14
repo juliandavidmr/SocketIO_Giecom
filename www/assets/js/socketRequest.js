@@ -31,9 +31,16 @@ $(document).ready(function() {
 		 //var l=['1', '2', '3', '4', '5', '6'];
 		 var l =[];
 		 var s1=[], s2=[];
-		 for (var i = 0; i < data.length; i++) {
-			 l.push(data[i].insertDate);
-			 s1.push(data[i].Dato)
+		 var sensores = [{}];
+		 sensores.push({[90, 87]});
+		 for (var i = 0; i < data.datosensores.length; i++) {
+			 for (var j = 0; j < data.tiposensores.length; j++) {
+				 if(data.datosensores[i].fk_idSensor == data.tiposensores[j].idTipoSensor){
+					 
+				 }
+			 }
+			 l.push(data.datosensores[i].insertDate);
+			 s1.push(data.datosensores[i].Dato)
 
 		 }
 		new Chartist.Line('#chart1', {

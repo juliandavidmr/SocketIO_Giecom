@@ -44,13 +44,10 @@ module.exports.getDatosSensores = function(callback) {
   });
 };
 
-module.exports.getTipoSensors = function(callback) {
+module.exports.getTipoSensores = function(callback) {
   knex
-  .select(['Dato', 'Dato.insertDate', 'Dato.updateDate', 'Sensor.NombreSensor'])
-  .from('Dato')
-  .orderBy('Dato.insertDate', 'DESC')
-  .innerJoin('Sensor', 'Sensor.idSensor', 'Dato.fk_idSensor')
-  .limit(100)
+  .select('*')
+  .from('tiposensor')
   .then(function(rows) {
     callback(rows);
   })
