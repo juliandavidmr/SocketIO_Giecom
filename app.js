@@ -91,7 +91,7 @@ io.on('connection', function(socket) {
  * @return {[type]} [description]
  */
 var watch = function() {
-	console.log("Search data & emitiendo, " + new Date());
+	//console.log("Search data & emitiendo, " + new Date());
 	db.getDatosSensores(function(rows) {
 		//console.log(JSON.stringify(rows));
 		io.sockets.emit('initial notes', rows);

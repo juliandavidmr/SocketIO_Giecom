@@ -19,28 +19,6 @@ $(document).ready(function() {
 		$('#notes').html(html);
 	});
 
-	// Initial set of notes, loop through and add to list
-	socket.on('initial notes', function(data) {
-		var html = '';
-		for (var i = 0; i < data.length; i++) {
-			// We store html as a var then add to DOM after for efficiency
-			html += jsonToHtml_DatosSensores(data[i]);
-		}
-		cantidad = data.length;
-		$('#notes').html(html);
-	});
-
-	// Initial set of sensores
-/*	socket.on('sensores', function(data) {
-		var html = '';
-		for (var i = 0; i < data.length; i++) {
-			// We store html as a var then add to DOM after for efficiency
-			html += jsonToHtml_Sensores(data[i]);
-		}
-		console.log(html);
-		$('#sensores').html(html);
-	});*/
-
   socket.on('new note', function(data) {
 		//prepend apila el dato en la parte de arriba
 		  $('#notes').prepend(jsonToHtml_DatosSensores(data));
@@ -56,7 +34,7 @@ $(document).ready(function() {
 			dato: $('#textData_Input').val()
 		});
 	});
-	
+
 	/*
 	Convierte un json con el dato de un sensor a codigo html
 	*/
