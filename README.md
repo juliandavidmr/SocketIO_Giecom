@@ -17,8 +17,11 @@ Monitoreo en *tiempo real* de varios tipos de sensores.
 * [knexjs] - Constructor avanzado de query
 
 ### Instalación
+Pasos de instalación:
 
-Debes tener instalado [node.js] (superior a la 5.0) en tu equipo.
+1. Debes tener instalado [node.js] (superior a la 5.0) en tu equipo.
+2. Si se usa en localhost, se debe tener instalado MySql (v5.5 o superior)
+3. Ejecutar lo seguiente:
 
 ```sh
 $ git clone https://github.com/juliandavidmr/SocketIO_Giecom
