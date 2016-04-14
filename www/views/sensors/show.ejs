@@ -1,0 +1,123 @@
+<!--
+{
+  "idSensor":1,
+  "NombreSensor":"Sensor de nivel",
+  "Referencia":"DDFC",
+  "Descripcion":"Sensor de nivel por luz",
+  "insertDate":"2016-04-07T22:39:31.000Z",
+  "updateDate":"2016-04-07T22:39:31.000Z",
+  "fk_idTipoSensor":1,
+  "Maximo":300,
+  "Minimo":-20,
+  "Altura":200,
+  "idTipoSensor":1,
+  "NombreTipoSensor":"Nivel"
+}
+-->
+
+<html lang="en">
+    <%- include ../partials/header %>
+    <body>
+        <div class="wrapper">
+            <%- include('../partials/sidemenu', {activo: 'sensores'}) %>
+
+            <div class="main-panel">
+
+                <%- include ../partials/nav %>
+
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h4 class="title"><%= sensor.NombreSensor %></h4>
+                                    </div>
+                                    <div class="content">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label>Nombre del Sensor (disabled)</label>
+                                                        <input type="text" class="form-control" disabled placeholder="Company" value="<%= sensor.NombreSensor %>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Referencia</label>
+                                                        <input type="text" class="form-control" placeholder="Username" value="<%= sensor.Referencia %>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Tipo de sensor</label>
+                                                        <input type="text" class="form-control" placeholder="Email" value="<%= sensor.NombreTipoSensor %>">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Creado</label>
+                                                        <input type="text" class="form-control" placeholder="Company" value="<%= moment(sensor.insertDate).fromNow() %>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Actualizado</label>
+                                                        <input type="text" class="form-control" placeholder="Last Name" value="<%= (sensor.updateDate == sensor.insertDate)? moment(sensor.updateDate).fromNow() : 'No actualizado' %>">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Altura</label>
+                                                        <input type="number" class="form-control" placeholder="City" value="<%= sensor.Altura %>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Nivel maximo</label>
+                                                        <input type="number" class="form-control" placeholder="Country" value="<%= sensor.Maximo %>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Nivel minimo</label>
+                                                        <input type="number" class="form-control" placeholder="<%= sensor.Minimo %>">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Descripcion</label>
+                                                        <textarea rows="5" class="form-control" placeholder="Here can be your description" value="Mike"><%= sensor.Descripcion %></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-info btn-fill pull-right">Update Profile</button>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <%- include ../partials/footer %>
+
+            </div>
+        </div>
+
+    </body>
+
+    <%- include ../partials/scripts %>
+</html>

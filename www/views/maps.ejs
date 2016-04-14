@@ -1,0 +1,21 @@
+<%- include partials/header %>
+
+<div class="wrapper">
+    <%- include('partials/sidemenu', {activo: 'maps'}) %>
+
+    <div class="main-panel">
+        <%- include partials/nav %>
+        <div id="map"></div>
+    </div>
+</div>
+
+<%- include partials/scripts %>
+
+<!--  Google Maps Plugin    -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+<script>
+    $().ready(function() {
+        demo.initGoogleMaps();
+    });
+</script>

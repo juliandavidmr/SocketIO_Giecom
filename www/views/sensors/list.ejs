@@ -1,0 +1,77 @@
+<html lang="en">
+    <%- include ../partials/header %>
+    <body>
+
+        <div class="wrapper">
+            <%- include('../partials/sidemenu', {activo: 'sensores'}) %>
+            <div class="main-panel">
+                <%- include ../partials/nav %>
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h4 class="title">Striped Table with Hover</h4>
+                                        <p class="category">Here is a subtitle for this table</p>
+                                    </div>
+                                    <div class="content table-responsive table-full-width">
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                                <th>#</th>
+                                                <th>Nombre</th>
+                                                <th>Referencia</th>
+                                                <th>Descripcion</th>
+                                                <th>Maximo</th>
+                                                <th>Minimo</th>
+                                                <th>Altura</th>
+                                            </thead>
+                                            <tbody>
+                                                <% for (var i = 0; i < sensores.length; i++) {  %>
+                                                    <tr>
+                                                        <td><%= (i+1) %></td>
+                                                        <td><%= sensores[i].NombreSensor %></td>
+                                                        <td><%= sensores[i].Referencia %></td>
+                                                        <td><%= sensores[i].Descripcion %></td>
+                                                        <td><%= sensores[i].Maximo %></td>
+                                                        <td><%= sensores[i].Minimo %></td>
+                                                        <td><%= sensores[i].Altura %></td>
+                                                        <td>
+                                                            <a href="/sensor/show/<%= sensores[i].idSensor %>">VER</a>
+                                                        </td>
+                                                    </tr>
+                                                <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                   <div class="ct-chart ct-golden-section" id="chart1"></div>
+                                    <div class="ct-chart ct-golden-section" id="chart2"></div>
+
+<script>
+  // Initialize a Line chart in the container with the ID chart1
+  new Chartist.Line('#chart1', {
+    labels: [1, 2, 3, 4],
+    series: [[100, 120, 180, 200]]
+  });
+
+  // Initialize a Line chart in the container with the ID chart2
+  new Chartist.Bar('#chart2', {
+    labels: [1, 2, 3, 4],
+    series: [[5, 2, 8, 3]]
+  });
+</script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <%- include ../partials/footer %>
+
+            </div>
+        </div>
+        
+    </body>
+    <%- include ../partials/scripts %>
+</html>
