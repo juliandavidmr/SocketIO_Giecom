@@ -1,33 +1,33 @@
-/**
- * Created by julian on 9/03/16.
- */
-
 'use strict';
 
-const express = require('express');
-const app = express();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
-const mysql = require('mysql');
-const bodyParser = require('body-parser');
-
-const sassMiddleware = require('node-sass-middleware');
-const path = require('path');
+const express 						= require('express');
+const app 								= express();
+const http 								= require('http').Server(app);
+const io 									= require('socket.io')(http);
+const mysql 							= require('mysql');
+const bodyParser 					= require('body-parser');
+const sassMiddleware 			= require('node-sass-middleware');
+const path 								= require('path');
 
 //Conexion con la base de datos
-const db = require('./db/db_sensor');
+const db_sensor 					= require('./db/db_sensor');
+const db_tiposensor 			= require('./db/db_tiposensor');
 
-const routes_index = require('./routes/index');
-const routes_sensors = require('./routes/sensors');
+const routes_index 				= require('./routes/index');
+const routes_sensors 			= require('./routes/sensors');
+const routes_tiposensors 	= require('./routes/tiposensor');
+const routes_usuario 			= require('./routes/usuario');
 
-//app.use(bodyParser());
+
 app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(bodyParser.urlencoded({
+	extended: true
+})); // support encoded bodies
 
 app.use(sassMiddleware({
 	/* Options */
 	src: __dirname,
-	dest: path.join(__dirname, 'www/assets'),
+	dest: path.join(__dirname, 'www/assets/sass'),
 	debug: true,
 	outputStyle: 'compressed',
 	prefix: '/prefix' // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
@@ -36,6 +36,8 @@ app.use(sassMiddleware({
 //Rutas
 app.use('/', routes_index);
 app.use('/sensor', routes_sensors);
+app.use('/tiposensor', routes_tiposensors);
+app.use('/usuario', routes_tiposensors);
 
 //Crear variable moment como local para todas las plantillas
 app.locals.moment = require('moment');
@@ -71,31 +73,32 @@ io.sockets.on('connection', function(socket) {
 		io.sockets.emit('users connected', socketCount)
 	});
 
-	socket.on('new note', function(data) {
+/*	socket.on('new note', function(data) {
 		// New note added, push to all sockets and insert into db
 		notes.push(data);
 		io.sockets.emit('new note', data);
 		// Use node's db injection format to filter incoming data
 		insertNote(data);
-	});
-
-	/*
-	Apenas se un cliente se conecta, se le envian todos los datos
-	capturados por los sensores
-	*/
+	});*/
 });
 
 /**
  * Consulta database y envia a los clientes cada 2 s
  * @return {[type]} [description]
  */
-var watch = function () {
-    //console.log("Search data, emitiendo");
-		db.getDatosSensores(function(rows) {
-			//console.log(JSON.stringify(rows));
-			io.sockets.emit('initial notes', rows);
+var watch = function() {
+	db_sensor.getDatosSensores(function(rows) {
+		//console.log(JSON.stringify(rows));
+		db_tiposensor.getTiposSensores(function(datos) {
+			const data = {
+				datosensores: rows,
+				tiposensores: datos
+			}
+			//console.log(JSON.stringify(data) + "\n");
+			io.sockets.emit('datos datos', data);
 		});
-    setTimeout(watch,2000);
+	});
+	setTimeout(watch, 2000);
 }
 watch();
 

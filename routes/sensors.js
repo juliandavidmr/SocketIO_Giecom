@@ -63,9 +63,7 @@ router.post('/register', function(req, res, next) {
  * @return {[type]}               [description]
  */
 router.get('/graficos', function(req, res, next) {
-	db.getSensores(function(rows) {
-		res.render(dir + 'views/sensors/prueba_grafico');
-	});
+	res.render(dir + 'views/sensors/graficos');
 });
 
 /*

@@ -31,7 +31,7 @@ module.exports.getSensorById = function(idSensor, callback) {
 
 module.exports.getDatosSensores = function(callback) {
 	knex
-		.select(['Dato', 'Dato.insertDate', 'Dato.updateDate', 'Sensor.NombreSensor', 'Sensor.Descripcion'])
+		.select(['Dato', 'Dato.insertDate', 'Dato.fk_idSensor', 'Dato.updateDate', 'Sensor.NombreSensor'])
 		.from('Dato')
 		.orderBy('Dato.insertDate', 'DESC')
 		.innerJoin('Sensor', 'Sensor.idSensor', 'Dato.fk_idSensor')
@@ -55,19 +55,4 @@ module.exports.insertSensor = function(new_sensor, callback) {
 		.catch(function(error) {
 			console.error("ERROR " + error)
 		});
-};
-
-module.exports.getDatosSensores = function(callback) {
-  knex
-  .select(['Dato', 'Dato.insertDate', 'Dato.updateDate', 'Sensor.NombreSensor'])
-  .from('Dato')
-  .orderBy('Dato.insertDate', 'DESC')
-  .innerJoin('Sensor', 'Sensor.idSensor', 'Dato.fk_idSensor')
-  .limit(100)
-  .then(function(rows) {
-    callback(rows);
-  })
-  .catch(function(error) {
-    console.error("ERROR " + error)
-  });
 };

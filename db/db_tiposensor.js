@@ -29,8 +29,6 @@ module.exports.getTiposSensores_Sensor = function(callback) {
   });
 };
 
-
-
 module.exports.getSensorById = function(idSensor, callback) {
 	knex.where('idSensor', '=', idSensor)
 		.select('*')

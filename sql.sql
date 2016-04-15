@@ -19,8 +19,6 @@ DROP SCHEMA IF EXISTS `bd_sensor` ;
 CREATE SCHEMA IF NOT EXISTS `bd_sensor` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 USE `bd_sensor` ;
 
-<<<<<<< HEAD
-
 --
 -- Table structure for table `Dato`
 --
