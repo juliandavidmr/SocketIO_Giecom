@@ -4,7 +4,6 @@ module.exports.getTiposSensores = function(callback) {
 	knex
 		.select('*')
 		.from('TipoSensor')
-		.orderBy('Dato.insertDate', 'DESC')
 		.limit(30)
 		.orderBy('NombreTipoSensor', 'desc')
 		.then(function(rows) {

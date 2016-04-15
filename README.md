@@ -9,6 +9,7 @@ Monitoreo en *tiempo real* de varios tipos de sensores.
 * [node.js] - Backend orientado a eventos I/O
 * [Express] - Framework web de node.js
 * [jQuery] - Libreria javascript para cliente
+* [AngularJS] - FrontEnd
 * [socket.io] - Gestion de procesos en tiempo real
 * [ejs] - Javascript embebido en templates.
 * [momentjs] - Tratamiento de fechas en JavaScript.

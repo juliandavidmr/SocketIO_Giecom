@@ -1,8 +1,3 @@
-/* ____________________________________________________________________________
-                          RUTAS
-   ____________________________________________________________________________
-*/
-
 'use strict';
 
 const express = require('express');
@@ -61,6 +56,12 @@ router.post('/register', function(req, res, next) {
 	});
 });
 
+/**
+ * View de graficos en tiempo real
+ * @param  {[type]} '/graficos'   [description]
+ * @param  {[type]} function(req, res,          next [description]
+ * @return {[type]}               [description]
+ */
 router.get('/graficos', function(req, res, next) {
 	db.getSensores(function(rows) {
 		res.render(dir + 'views/sensors/prueba_grafico');
