@@ -9,6 +9,7 @@ Monitoreo en *tiempo real* de varios tipos de sensores.
 * [node.js] - Backend orientado a eventos I/O
 * [Express] - Framework web de node.js
 * [jQuery] - Libreria javascript para cliente
+* [AngularJS] - FrontEnd
 * [socket.io] - Gestion de procesos en tiempo real
 * [ejs] - Javascript embebido en templates.
 * [momentjs] - Tratamiento de fechas en JavaScript.
@@ -30,7 +31,7 @@ $ npm install
 $ nodemon
 ```
    [node.js]: <http://nodejs.org>
-   [jQuery]: <http://jquery.com>
+   [jQuery]: <http://jquery.com>   
    [express]: <http://expressjs.com>
    [AngularJS]: <http://angularjs.org>
    [Gulp]: <http://gulpjs.com>

@@ -17,7 +17,7 @@
 
 <html lang="en">
     <%- include ../partials/header %>
-    <body>
+    <body ng-app="App">
         <div class="wrapper">
             <%- include('../partials/sidemenu', {activo: 'sensores'}) %>
 
@@ -25,7 +25,7 @@
 
                 <%- include ../partials/nav %>
 
-                <div class="content">
+                <div class="content" ng-controller="FormSensorController">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
@@ -34,7 +34,7 @@
                                         <h4 class="title">Nuevo sensor</h4>
                                     </div>
                                     <div class="content">
-                                        <form method="post" action="/sensor/register">
+                                        <form method="{{method}}" action="/sensor/register">
                                             <div class="row">
                                                 <div class="col-md-5">
                                                     <div class="form-group">
@@ -66,19 +66,19 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Altura</label>
-                                                        <input name="Altura" type="number" class="form-control" placeholder="City">
+                                                        <input name="Altura" type="number" class="form-control" placeholder="Altura">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Nivel maximo</label>
-                                                        <input name="Maximo" type="number" class="form-control" placeholder="Country">
+                                                        <input name="Maximo" type="number" class="form-control" placeholder="Nivel Maximo">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Nivel minimo</label>
-                                                        <input name="Minimo" type="number" class="form-control" placeholder="">
+                                                        <input name="Minimo" type="number" class="form-control" placeholder="Nivel Minimo">
                                                     </div>
                                                 </div>
                                             </div>
@@ -92,13 +92,22 @@
                                                 </div>
                                             </div>
 
-                                            <button type="submit" class="btn btn-info btn-fill pull-right">Registrar</button>
+                                            <div class="input-group">
+                                                <span class="input-group-addon" ng-init="estado = false">
+                                                    <input type="checkbox" aria-label="" ng-model="estado" ng-checked="change_modo()">
+                                                </span>
+                                                <input type="text" class="form-control" aria-label="" value="{{modo}}">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-info btn-fill pull-right">Registrar</button>
+                                                </div>
+                                            </div>
                                             <div class="clearfix"></div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -111,4 +120,29 @@
     </body>
 
     <%- include ../partials/scripts %>
+
+    <script>
+        angular.module('App', []).controller('FormSensorController', [
+            '$scope',
+            function($scope) {
+                $scope.master = {};
+
+                $scope.update = function(user) {
+                    $scope.master = angular.copy(user);
+                };
+
+                $scope.change_modo = function() {
+                    if(!$scope.estado) {
+                      $scope.modo = 'Modo edición desactivado';
+                      $scope.method = 'POST';
+                    } else {
+                      $scope.modo = 'Modo edición activado';
+                      $scope.method = 'PUT';
+                    }
+                };
+
+                $scope.change_modo();
+            }
+        ]);
+    </script>
 </html>

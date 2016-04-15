@@ -34,7 +34,7 @@
                                         <h4 class="title"><%= sensor.NombreSensor %></h4>
                                     </div>
                                     <div class="content">
-                                        <form>
+                                        <form method="get">
                                             <div class="row">
                                                 <div class="col-md-5">
                                                     <div class="form-group">
@@ -75,19 +75,19 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Altura</label>
-                                                        <input type="number" class="form-control" placeholder="City" value="<%= sensor.Altura %>">
+                                                        <input type="number" class="form-control" placeholder="City" value="<%= (sensor.Altura != undefined)? sensor.Altura : 'No aplica' %>">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Nivel maximo</label>
-                                                        <input type="number" class="form-control" placeholder="Country" value="<%= sensor.Maximo %>">
+                                                        <input type="number" class="form-control" placeholder="Country" value="<%= sensor.Maximo %>" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Nivel minimo</label>
-                                                        <input type="number" class="form-control" placeholder="<%= sensor.Minimo %>">
+                                                        <input type="number" class="form-control" placeholder="<%= sensor.Minimo %>" value="<%= sensor.Minimo %>" required>
                                                     </div>
                                                 </div>
                                             </div>

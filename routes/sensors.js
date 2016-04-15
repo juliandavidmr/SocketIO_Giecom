@@ -1,15 +1,10 @@
-/* ____________________________________________________________________________
-                          RUTAS
-   ____________________________________________________________________________
-*/
-
 'use strict';
 
 const express = require('express');
 const router = express.Router();
 const db_sensor = require('../db/db_sensor');
 const db_tiposensor = require('../db/db_tiposensor');
-
+const db = require('../db/db_sensor');
 const dir = '../www/';
 
 /*
@@ -68,7 +63,15 @@ router.post('/register', function(req, res, next) {
 	});
 });
 
-
+/**
+ * View de graficos en tiempo real
+ * @param  {[type]} '/graficos'   [description]
+ * @param  {[type]} function(req, res,          next [description]
+ * @return {[type]}               [description]
+ */
+router.get('/graficos', function(req, res, next) {
+	res.render(dir + 'views/sensors/graficos');
+});
 
 /*
   GET: Ver un sensor
