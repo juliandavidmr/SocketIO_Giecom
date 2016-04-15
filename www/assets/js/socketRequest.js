@@ -11,48 +11,43 @@ $(document).ready(function() {
 	// Initial set of notes, loop through and add to list
 	socket.on('initial notes', function(data) {
 		var html = '';
-		for (var i = 0; i < data.length; i++) {
+		for (var i = 0; i < data.datosensores.length; i++) {
 			// We store html as a var then add to DOM after for efficiency
-			html += jsonToHtml_DatosSensores(data[i]);
+			html += jsonToHtml_DatosSensores(data.datosensores[i]);
 		}
-    cantidad = data.length;
 		$('#notes').html(html);
 	});
 
 	// Initial set of notes, loop through and add to list
 	socket.on('initial notes', function(data) {
 		var html = '';
-		for (var i = 0; i < data.length; i++) {
+		for (var i = 0; i < data.datosensores.length; i++) {
 			// We store html as a var then add to DOM after for efficiency
-			html += jsonToHtml_DatosSensores(data[i]);
+			html += jsonToHtml_DatosSensores(data.datosensores[i]);
 		}
 		cantidad = data.length;
 		$('#notes').html(html);
 		 //var l=['1', '2', '3', '4', '5', '6'];
 		 var l =[];
 		 var s1=[], s2=[];
-		 var sensores = [{}];
-		 sensores.push({[90, 87]});
-		 for (var i = 0; i < data.datosensores.length; i++) {
-			 for (var j = 0; j < data.tiposensores.length; j++) {
-				 if(data.datosensores[i].fk_idSensor == data.tiposensores[j].idTipoSensor){
-					 
+		 var serie = [];
+		 var sensores = [];
+		 for (var j = 0; j < data.tiposensores.length; j++) {
+		 	for (var i = 0; i < data.datosensores.length; i++) {
+				 if(data.datosensores[i].fk_idSensor == data.tiposensores[j].idSensor){
+					 if(j==0){
+					 l.push(moment(data.datosensores[i].insertDate).format('LTS'));
+				 }
+					 serie.push(data.datosensores[i].Dato);
 				 }
 			 }
-			 l.push(data.datosensores[i].insertDate);
-			 s1.push(data.datosensores[i].Dato)
-
+			 sensores.push(serie);
+			 serie =[];
 		 }
 		new Chartist.Line('#chart1', {
 
 	    labels: l,
-	    series: [
-	      {
-	        data: s1
-	      },{
-					data:[30,56,3,-34,67,45,34]
-				}
-	    ]
+	    series: sensores
 	  });
 
 	});
