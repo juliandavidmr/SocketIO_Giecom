@@ -28,14 +28,21 @@ router.get('/', function(req, res, next) {
   GET: Listado de sensores
   list sensor
  */
-router.get('/register', function(req, res, next) {
+router.get('/register', ensureAuthenticated, function(req, res, next) {
 	db_tiposensor.getTiposSensores(function(rows) {
 		res.render(dir + 'views/sensors/register', {
 			tipos_sensores: rows
 		});
 	});
 });
-
+function ensureAuthenticated(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	} else {
+		//req.flash('error_msg','You are not logged in');
+		res.redirect('/usuarios/login');
+	}
+}
 /*
   GET: Listado de sensores
   list sensor

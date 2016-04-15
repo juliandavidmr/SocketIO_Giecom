@@ -6,9 +6,10 @@
 const express = require('express');
 const router = express.Router();
 const db_sensor = require('../db/db_sensor');
+const db_u = require('../db/db_users');
 const db_dato = require('../db/db_dato');
 
-console.log(db_dato.area);
+//console.log(db_dato.area);
 
 const dir = '../www/';
 
@@ -84,5 +85,11 @@ router.get('/list', function(req, res) {
 	});
 });
 
+router.get('/logout', function(req, res){
+    req.logout();
 
+    //req.flash('success_msg', 'You are logged out');
+
+    res.redirect('/usuarios/login');
+});
 module.exports = router;

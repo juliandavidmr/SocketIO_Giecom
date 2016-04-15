@@ -1,0 +1,114 @@
+<!--
+{
+  "idSensor":1,
+  "NombreSensor":"Sensor de nivel",
+  "Referencia":"DDFC",
+  "Descripcion":"Sensor de nivel por luz",
+  "insertDate":"2016-04-07T22:39:31.000Z",
+  "updateDate":"2016-04-07T22:39:31.000Z",
+  "fk_idTipoSensor":1,
+  "Maximo":300,
+  "Minimo":-20,
+  "Altura":200,
+  "idTipoSensor":1,
+  "NombreTipoSensor":"Nivel"
+}
+-->
+
+<html lang="en">
+    <%- include ../partials/header %>
+    <body>
+        <div class="wrapper">
+            <%- include('../partials/sidemenu', {activo: 'sensores'}) %>
+
+            <div class="main-panel">
+
+                <%- include ../partials/nav %>
+
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h4 class="title">Nuevo sensor</h4>
+                                    </div>
+                                    <div class="content">
+                                        <form method="post" action="/sensor/register">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label>Nombre del Sensor</label>
+                                                        <input name="NombreSensor" type="text" class="form-control" placeholder="Nombre del sensor" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Referencia</label>
+                                                        <input name="Referencia" type="text" class="form-control" placeholder="Referencia" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Tipo de sensor</label>
+                                                        <select class="form-control" name="fk_idTipoSensor">
+                                                            <% for (var i = 0; i < tipos_sensores.length; i++) { %>
+                                                                <option value="<%= tipos_sensores[i].idTipoSensor %>">
+                                                                    <%= tipos_sensores[i].NombreTipoSensor %>
+                                                                </option>
+                                                            <% } %>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Altura</label>
+                                                        <input name="Altura" type="number" class="form-control" placeholder="City">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Nivel maximo</label>
+                                                        <input name="Maximo" type="number" class="form-control" placeholder="Country">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Nivel minimo</label>
+                                                        <input name="Minimo" type="number" class="form-control" placeholder="">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Descripcion</label>
+                                                        <textarea name="Descripcion" rows="5" class="form-control" placeholder="Here can be your description" value="Mike"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-info btn-fill pull-right">Registrar</button>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <%- include ../partials/footer %>
+
+            </div>
+        </div>
+
+    </body>
+
+    <%- include ../partials/scripts %>
+</html>
