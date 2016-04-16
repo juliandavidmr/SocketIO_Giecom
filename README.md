@@ -2,7 +2,7 @@
 Monitoreo en *tiempo real* de varios tipos de sensores.
 
 ### Version
-1.0.1
+1.0.2
 
 ### Tecnologias usadas
 
@@ -16,19 +16,26 @@ Monitoreo en *tiempo real* de varios tipos de sensores.
 * [node mysql] - Gestor de bases de datos
 * [bootstrap] - Estilos visuales
 * [knexjs] - Constructor avanzado de query
+* [babel] - Compatibilidad con es2015
 
 ### Instalación
-Pasos de instalación:
 
-1. Debes tener instalado [node.js] (superior a la 5.0) en tu equipo.
-2. Si se usa en localhost, se debe tener instalado MySql (v5.5 o superior)
-3. Ejecutar lo seguiente:
+Tener instalado:
+1.  [node.js] Superior a la 5.0
+2.  nodemon instalado de forma global:
+```sh
+$ npm install -g nodemon
+```
+3.  MySQL 5.5 o superior.
+
+Pasos de instalación:
 
 ```sh
 $ git clone https://github.com/juliandavidmr/SocketIO_Giecom
 $ cd SocketIO_Giecom
 $ npm install
-$ nodemon
+$ nodemon --exec npm run babel-node -- app.js
+
 ```
    [node.js]: <http://nodejs.org>
    [jQuery]: <http://jquery.com>   
@@ -41,3 +48,4 @@ $ nodemon
    [node mysql]: <https://github.com/felixge/node-mysql>
    [Bootstrap]: <http://getbootstrap.com/>
    [knexjs]: <http://knexjs.org/>
+   [babel]: <https://babeljs.io/docs/setup/#installation>

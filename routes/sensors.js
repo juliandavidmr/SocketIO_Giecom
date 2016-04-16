@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const db_tiposensor = require('../db/db_tiposensor');
-const db = require('../db/db_sensor');
+import { Sensor } from "../db/db_sensor";
 
 const dir = '../public/';
 
@@ -12,7 +12,7 @@ const dir = '../public/';
   list sensor
  */
 router.get('/', function(req, res, next) {
-	db_sensor.getSensores(function(rows) {
+	new Sensor().getSensores(function(rows) {
 		res.render(dir + 'views/sensors/list', {
 			sensores: rows
 		});
@@ -54,7 +54,7 @@ router.post('/register', function(req, res, next) {
 		Altura: req.body.Altura,
 		fk_idTipoSensor: req.body.fk_idTipoSensor
 	}
-	db_sensor.insertSensor(new_sensor, function(row, est) {
+	new Sensor().insertSensor(new_sensor, function(row, est) {
 		if (row > 0) {
 			res.redirect('/sensor');
 		} else {
@@ -79,7 +79,7 @@ router.get('/graficos', function(req, res, next) {
  */
 router.get('/show/:idSensor', function(req, res, next) {
 	const idSensor = req.params['idSensor'];
-	db_sensor.getSensorById(idSensor, function(row) {
+	new Sensor().getSensorById(idSensor, function(row) {
 		if (row) {
 			res.render(dir + 'views/sensors/show', {
 				sensor: row[0]

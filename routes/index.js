@@ -1,10 +1,9 @@
 const express 		= require('express');
 const router 			= express.Router();
 
-const db_sensor 	= require('../db/db_sensor');
 import { Sensor } from "../db/db_sensor";
-const db_u 				= require('../db/db_usuario');
-const db_dato 		= require('../db/db_dato');
+import { Usuario } from "../db/db_sensor";
+import { Dato } from "../db/db_sensor";
 
 //console.log(db_dato.area);
 
@@ -75,8 +74,7 @@ router.get('/notifications', function(req, res) {
   list
  */
 router.get('/list', function(req, res) {
-	const s = new Sensor();
-	s.getSensores(function(rows) {
+	new Sensor().getSensores(function(rows) {
 		res.render(dir + 'views/list', {
 			sensores: rows
 		});

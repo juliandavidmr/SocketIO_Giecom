@@ -15,7 +15,6 @@ export class Sensor {
 			.orderBy('NombreSensor', 'desc')
 			.then(function(rows) {
 				callback(rows);
-				return rows;
 			})
 			.catch(function(error) {
 				console.error("ERROR " + error)
