@@ -2,10 +2,10 @@
 
 const express = require('express');
 const router = express.Router();
-const db_sensor = require('../db/db_sensor');
 const db_tiposensor = require('../db/db_tiposensor');
 const db = require('../db/db_sensor');
-const dir = '../www/';
+
+const dir = '../public/';
 
 /*
   GET: Listado de sensores
@@ -30,6 +30,7 @@ router.get('/register', ensureAuthenticated, function(req, res, next) {
 		});
 	});
 });
+
 function ensureAuthenticated(req, res, next){
 	if(req.isAuthenticated()){
 		return next();
@@ -38,6 +39,7 @@ function ensureAuthenticated(req, res, next){
 		res.redirect('/usuarios/login');
 	}
 }
+
 /*
   GET: Listado de sensores
   list sensor
@@ -52,8 +54,6 @@ router.post('/register', function(req, res, next) {
 		Altura: req.body.Altura,
 		fk_idTipoSensor: req.body.fk_idTipoSensor
 	}
-	var ne = {};
-	var estado = false;
 	db_sensor.insertSensor(new_sensor, function(row, est) {
 		if (row > 0) {
 			res.redirect('/sensor');

@@ -1,11 +1,19 @@
+<!--
+
+
+===========================================================
+                      INICIO DE SESION
+===========================================================
+
+-->
 <html lang="en">
-    <%- include partials/header %>
+    <%- include ../partials/header %>
     <body>
         <div class="wrapper">
-            <%- include('partials/sidemenu', {activo: 'user'}) %>
+            <%- include('../partials/sidemenu', {activo: 'user'}) %>
 
             <div class="main-panel">
-                <%- include partials/nav %>
+                <%- include ../partials/nav %>
                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">
@@ -15,9 +23,9 @@
                                         <h4 class="title">Inicio de Sesión</h4>
                                     </div>
                                     <div class="content">
-                                        <form method="post" action"/user/login">					
-				            <div class="row">
-                                               <div class="col-md-5">
+                                        <form method="post" action"/user/login">
+                                            <div class="row">
+                                                <div class="col-md-5">
                                                     <div class="form-group">
                                                         <label>Nombre de Usuario</label>
                                                         <input name="username" type="text" class="form-control" placeholder="Username">
@@ -42,13 +50,12 @@
                     </div>
                 </div>
 
-
-                    <%- include partials/footer %>
+                <%- include ../partials/footer %>
 
             </div>
         </div>
 
     </body>
 
-        <%- include partials/scripts %>
+    <%- include ../partials/scripts %>
 </html>

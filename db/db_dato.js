@@ -1,6 +1,6 @@
 'use strict';
 
-class Sensor {
+export class Dato {
   constructor(msg) {
     this.msg = msg;
   }
@@ -9,5 +9,3 @@ class Sensor {
     return this.msg;
   }
 }
-
-module.exports = new Sensor("Hola julian");

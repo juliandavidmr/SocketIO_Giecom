@@ -1,17 +1,14 @@
-/* ____________________________________________________________________________
-                          RUTAS
-   ____________________________________________________________________________
-*/
+const express 		= require('express');
+const router 			= express.Router();
 
-const express = require('express');
-const router = express.Router();
-const db_sensor = require('../db/db_sensor');
-const db_u = require('../db/db_users');
-const db_dato = require('../db/db_dato');
+const db_sensor 	= require('../db/db_sensor');
+import { Sensor } from "../db/db_sensor";
+const db_u 				= require('../db/db_usuario');
+const db_dato 		= require('../db/db_dato');
 
 //console.log(db_dato.area);
 
-const dir = '../www/';
+const dir = '../public/';
 
 /*
   GET: Pagina principal
@@ -19,7 +16,7 @@ const dir = '../www/';
  */
 router.get('/', function(req, res) {
 	//res.render(dir + 'dashboard',{ layout: 'layout' });
-	res.render(dir + 'views/dashboard');
+	res.render(dir + '/views/dashboard');
 });
 
 /*
@@ -78,7 +75,8 @@ router.get('/notifications', function(req, res) {
   list
  */
 router.get('/list', function(req, res) {
-	db_sensor.getSensores(function(rows) {
+	const s = new Sensor();
+	s.getSensores(function(rows) {
 		res.render(dir + 'views/list', {
 			sensores: rows
 		});
@@ -87,9 +85,8 @@ router.get('/list', function(req, res) {
 
 router.get('/logout', function(req, res){
     req.logout();
-
     //req.flash('success_msg', 'You are logged out');
-
     res.redirect('/usuarios/login');
 });
+
 module.exports = router;
