@@ -18,7 +18,7 @@ export class Usuario {
 			.catch(function(error) {
 				console.error("ERROR " + error)
 			});
-	};
+	}
 
 	insertUsuario(new_user, callback) {
 		console.log("Hast aqui" + new_user.password);
@@ -37,7 +37,8 @@ export class Usuario {
 					});
 			});
 		});
-	};
+	}
+
 	getUserByUsername(username, callback) {
 		//var query = {username: username};
 		//User.findOne(query, callback);
@@ -52,8 +53,8 @@ export class Usuario {
 			.catch(function(error) {
 				console.error("ERROR --" + error)
 			});
-	};
-	
+	}
+
 	getUserById(userId, callback) {
 		//var query = {username: username};
 		//User.findOne(query, callback);
@@ -68,7 +69,7 @@ export class Usuario {
 			.catch(function(error) {
 				console.error("ERROR --" + error)
 			});
-	};
+	}
 
 	comparePassword(candidatePassword, hash, callback) {
 		bcrypt.compare(candidatePassword, hash, function(err, isMatch) {

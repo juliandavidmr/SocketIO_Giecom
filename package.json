@@ -31,7 +31,8 @@
         "express-validator": "*",
         "passport": "*",
         "passport-http": "*",
-        "passport-local": "*"
+        "passport-local": "*",
+        "bcryptjs": "*"
     },
     "devDependencies": {
         "babel-cli": "^6.7.5",

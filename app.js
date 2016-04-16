@@ -7,7 +7,6 @@ const io 							= require('socket.io')(http);
 const mysql 					= require('mysql');
 const bodyParser 			= require('body-parser');
 const sassMiddleware 	= require('node-sass-middleware');
-const path 						= require('path');
 const morgan     	 		= require('morgan');
 const cookieParser 		= require('cookie-parser');
 const session 				= require('express-session');
