@@ -135,7 +135,7 @@ io.sockets.on('connection', function(socket) {
  */
 var watch = function() {
 	new Sensor().getDatosSensores(function(rows) {
-		new TipoSensor().getTiposSensores(function(datos) {
+		new Sensor().getSensores(function(datos) {
 			const data = {
 				datosensores: rows,
 				tiposensores: datos
