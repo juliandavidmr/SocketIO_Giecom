@@ -147,6 +147,7 @@ var watch = function() {
 }
 watch();
 
+
 /*
 Insertar nota en la base de datos
 Luego se emite la nota insertada a todos los clientes activos

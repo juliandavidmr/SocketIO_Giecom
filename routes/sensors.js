@@ -89,4 +89,16 @@ router.get('/show/:idSensor', function(req, res, next) {
 	});
 });
 
+router.get('/show_one_graphic/:idSensor', function(req, res, next) {
+	const idSensor = req.params['idSensor'];
+	new Sensor().getSensorById(idSensor, function(row) {
+		if (row) {
+			res.render(dir + 'views/sensors/show_one_graphic', {
+				sensor: row[0]
+			});
+		}
+		res.redirect('/list');
+	});
+});
+
 module.exports = router;

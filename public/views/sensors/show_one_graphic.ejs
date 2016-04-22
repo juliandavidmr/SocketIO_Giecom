@@ -1,0 +1,36 @@
+<html lang="en">
+    <%- include ../partials/header %>
+    <body>
+        <div class="wrapper">
+            <%- include('../partials/sidemenu', {activo: 'list'}) %>
+
+            <div class="main-panel">
+
+                <%- include ../partials/nav %>
+
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h4 class="title"><%= sensor.NombreSensor %></h4>
+                                    </div>
+                                    <div class="content">
+                                        <div id="chartone"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <%- include ../partials/footer %>
+
+            </div>
+        </div>
+
+    </body>
+
+    <%- include ../partials/scripts %>
+</html>

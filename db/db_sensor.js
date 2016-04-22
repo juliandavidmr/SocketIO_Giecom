@@ -50,6 +50,21 @@ export class Sensor {
 			});
 	};
 
+		getDatosSensoresById(idsensor, callback) {
+			knex.where('fk_idSensor', '=', idsensor)
+				.select(['Dato', 'Dato.insertDate', 'Dato.fk_idSensor', 'Dato.updateDate', 'Sensor.NombreSensor'])
+				.from('Dato')
+				.orderBy('Dato.insertDate', 'DESC')
+				.innerJoin('Sensor', 'Sensor.idSensor', 'Dato.fk_idSensor')
+				.limit(100)
+				.then(function(rows) {
+					callback(rows);
+				})
+				.catch(function(error) {
+					console.error("ERROR " + error)
+				});
+		};
+
   insertSensor(new_sensor, callback) {
 		knex('Sensor')
 			.insert(new_sensor)

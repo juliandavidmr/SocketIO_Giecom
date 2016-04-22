@@ -48,14 +48,8 @@ $(document).ready(function() {
 
 		}
 
-		new Chartist.Line('#chart1', {
-			labels: l,
-			series: sensores
-		});
-
-
 var chart = c3.generate({
-    bindto: '#chart',
+    bindto: '#chartone',
     data: {
 
       columns: sensores,
@@ -81,7 +75,6 @@ var chart = c3.generate({
       }
 		}
 });
-
 
 chart.on('created', function() {
   if(window.__anim0987432598723) {

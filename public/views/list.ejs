@@ -44,7 +44,7 @@
                                     <div class="content all-icons">
                                         <div id="sensores" class="row">
                                             <% for (var i = 0; i < sensores.length; i++) { %>
-                                                <a href="/sensor/show/<%= sensores[i].idSensor %>" class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
+                                                <a href="/sensor/show_one_graphic/<%= sensores[i].idSensor %>" class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
                                                     <div class="font-icon-detail">
                                                         <i class="pe-7s-eyedropper"></i>
                                                         <input type="text" value="<%= sensores[i].NombreSensor %>">
@@ -54,16 +54,16 @@
                                         </div>
                                     </div>
                                     <div class="content table-responsive table-full-width">
-                                        <table class="table table-hover table-striped">
+                                        <table id="dataTable" class="table table-hover table-striped">
                                             <thead>
-                                                <th>Dato</th>
-                                                <th>Sensor</th>
-                                                <th>Creado</th>
+                                                <th data-field="dato" data-sortable="true">Dato</th>
+                                                <th data-field="sensor" data-sortable="true">Sensor</th>
+                                                <th data-field="creado" data-sortable="true">Creado</th>
                                             </thead>
                                             <tbody id="notes"></tbody>
                                         </table>
                                     </div>
-                                    <div id="chart"></div>
+                                    <!--<div id="chart"></div>-->
                                 </div>
                             </div>
                         </div>

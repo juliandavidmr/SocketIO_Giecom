@@ -6,9 +6,96 @@
 <script src="/js/bootstrap-checkbox-radio-switch.js"></script>
 
 <!--  Charts Plugin -->
-<script src="/js/chartist.min.js"></script>
+  <!--<script src="/js/chartist.min.js"></script>---->
 <script src="/js/d3.min.js" charset="utf-8"></script>
 <script src="/js/c3.min.js"></script>
+
+<!--Tablas-->
+<script type="text/javascript" src="/datatables/js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="/datatables/js/bootstrap.js"></script>
+<script type="text/javascript" src="/datatables/js/bootstrap-table.js"></script>
+
+<script type="text/javascript">
+    var $table = $('#dataTable'),
+        $alertBtn = $('#alertBtn'),
+        full_screen = false;
+
+    $().ready(function(){
+        $table.bootstrapTable({
+            toolbar: ".toolbar",
+
+            showRefresh: true,
+            search: true,
+            showToggle: true,
+            showColumns: true,
+            pagination: true,
+            striped: true,
+            pageSize: 8,
+            pageList: [8,10,25,50,100],
+
+            formatShowingRows: function(pageFrom, pageTo, totalRows){
+                //do nothing here, we don't want to show the text "showing x of y from..."
+            },
+            formatRecordsPerPage: function(pageNumber){
+                return pageNumber + " rows visible";
+            },
+            icons: {
+                refresh: 'fa fa-refresh',
+                toggle: 'fa fa-th-list',
+                columns: 'fa fa-columns',
+                detailOpen: 'fa fa-plus-circle',
+                detailClose: 'fa fa-minus-circle'
+            }
+        });
+
+
+
+        $(window).resize(function () {
+            $table.bootstrapTable('resetView');
+        });
+
+
+        window.operateEvents = {
+            'click .like': function (e, value, row, index) {
+                alert('You click like icon, row: ' + JSON.stringify(row));
+                console.log(value, row, index);
+            },
+            'click .edit': function (e, value, row, index) {
+                alert('You click edit icon, row: ' + JSON.stringify(row));
+                console.log(value, row, index);
+            },
+            'click .remove': function (e, value, row, index) {
+                $table.bootstrapTable('remove', {
+                    field: 'id',
+                    values: [row.id]
+                });
+
+            }
+        };
+
+        $alertBtn.click(function () {
+            alert("You pressed on Alert");
+        });
+
+    });
+
+
+    function operateFormatter(value, row, index) {
+        return [
+            '<a rel="tooltip" title="Like" class="table-action like" href="javascript:void(0)" title="Like">',
+                '<i class="fa fa-heart"></i>',
+            '</a>',
+            '<a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" title="Edit">',
+                '<i class="fa fa-edit"></i>',
+            '</a>',
+            '<a rel="tooltip" title="Remove" class="table-action remove" href="javascript:void(0)" title="Remove">',
+                '<i class="fa fa-remove"></i>',
+            '</a>'
+        ].join('');
+    }
+
+
+</script>
 
 <!--  Notifications Plugin    -->
 <script src="/js/bootstrap-notify.js"></script>
@@ -28,6 +115,7 @@
 <script src="/js/socket/socket_datos.js"></script>
 <script src="/js/socket/socket_conected.js"></script>
 <script src="/js/socket/socket_sensores.js"></script>
+<script src="/js/socket/socket_datos_one_graphic.js"></script>
 
 <!-- Moment js -->
 <script src="/js/moment-with-locales.js"></script>
@@ -38,17 +126,24 @@
 <!-- AngularJS -->
 <script src="/js/angular.min.js"></script>
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
   moment.locale('es'); //Usar formato de hora español
   console.log(moment().format()); //Verficar que moment se ha cargado
-</script>
+</script>-->
+
+<!--<script type="text/javascript">
+			$(function () {
+				$("#dataTable").DataTable();
+			});
+    </script>-->
+
 
 <script type="text/javascript">
     $(document).ready(function() {
         demo.initChartist();
         $.notify({
             icon: 'pe-7s-gift',
-            message: "Bienvenido a <b>GIECOM</b> - a beautiful freebie for every web developer."
+            message: "Bienvenido a <b>GIECOM</b> - Evaluación de sensores."
         }, {
             type: 'info',
             timer: 2000
