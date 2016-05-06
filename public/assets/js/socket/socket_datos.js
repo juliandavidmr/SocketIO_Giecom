@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
 	// Initial set of notes, loop through and add to list
 	socket.on('datos datos', function(data) {
 		var html = '';
@@ -48,11 +49,6 @@ $(document).ready(function() {
 
 		}
 
-		new Chartist.Line('#chart1', {
-			labels: l,
-			series: sensores
-		});
-
 
 var chart = c3.generate({
     bindto: '#chart',
@@ -83,15 +79,20 @@ var chart = c3.generate({
 });
 
 
-chart.on('created', function() {
+
+
+/*chart.on('created', function() {
   if(window.__anim0987432598723) {
     clearTimeout(window.__anim0987432598723);
     window.__anim0987432598723 = null;
   }
   window.__anim0987432598723 = setTimeout(chart.update.bind(chart), 8000);
-});
+});*/
+
+
 
 	});
+
 
 
 	socket.on('users connected', function(data) {

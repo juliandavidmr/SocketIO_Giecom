@@ -1,4 +1,4 @@
-type = ['', 'info', 'success', 'warning', 'danger'];
+/*type = ['', 'info', 'success', 'warning', 'danger'];
 
 
 demo = {
@@ -231,4 +231,4 @@ demo = {
 	}
 
 
-}
+}*/

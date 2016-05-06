@@ -147,12 +147,13 @@ var watch = function() {
 }
 watch();
 
-
 /*
 Insertar nota en la base de datos
 Luego se emite la nota insertada a todos los clientes activos
 Despues se envia un json al cliente que realiza la solicitud post
 */
+
+
 app.post('/add/:item', function(req, res) {
 	let data = req.params['item'];
 	data = {
@@ -161,6 +162,21 @@ app.post('/add/:item', function(req, res) {
 	insertNote(data) //Si se inserta correctamente entonces se emite a los clientes conectados el nuevo dato
 	res.json(data); //Se retorna el varlo
 });
+
+/*app.get('/sensor/show_one_graphic/:idSensor', function(req, res, next) {
+	const idSensor = req.params['idSensor'];
+  console.log('id: ' + idSensor);
+	new Sensor().getSensorById(idSensor, function(row) {
+		if (row) {
+			res.render('./public/views/sensors/show_one_graphic', {
+				sensor: row[0]
+			});
+      console.log("Entrós app");
+			io.sockets.emit('datos uno', row);
+		}
+		res.redirect('/list');
+	});
+});*/
 
 /*
  * Escuchador

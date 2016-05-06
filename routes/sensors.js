@@ -89,7 +89,7 @@ router.get('/show/:idSensor', function(req, res, next) {
 	});
 });
 
-router.get('/show_one_graphic/:idSensor', function(req, res, next) {
+/*router.get('/show_one_graphic/:idSensor', function(req, res, next) {
 	const idSensor = req.params['idSensor'];
 	new Sensor().getSensorById(idSensor, function(row) {
 		if (row) {
@@ -97,8 +97,22 @@ router.get('/show_one_graphic/:idSensor', function(req, res, next) {
 				sensor: row[0]
 			});
 		}
+		//res.redirect('/list');
+	});
+});*/
+
+router.get('/show_one_graphic/:idSensor', function(req, res, next) {
+	const idSensor = req.params['idSensor'];
+	new Sensor().getDatosSensoresById(idSensor, function(row) {
+		if (row) {
+			//res.statusCode = 200;
+			res.render(dir + 'views/sensors/show_one_graphic', {
+				sensor: row
+			});
+		}
 		res.redirect('/list');
 	});
 });
+
 
 module.exports = router;

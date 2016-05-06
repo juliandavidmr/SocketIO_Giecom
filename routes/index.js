@@ -13,9 +13,15 @@ const dir = '../public/';
   GET: Pagina principal
   dashboard
  */
+
+ router.get('/main', function(req, res) {
+ 	//res.render(dir + 'dashboard',{ layout: 'layout' });
+ 	res.render(dir + '/views/dashboard');
+ });
+
 router.get('/', function(req, res) {
 	//res.render(dir + 'dashboard',{ layout: 'layout' });
-	res.render(dir + '/views/dashboard');
+	res.render(dir + '/views/usuario/login');
 });
 
 /*

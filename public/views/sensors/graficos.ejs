@@ -14,6 +14,7 @@ AQUI SE DEBEN MOSTRAR LAS GRAFICAS DE TODOS LOS SENSORES
 <html lang="en">
     <%- include ../partials/header %>
     <link rel="stylesheet" href="/css/chartist.min.css"/>
+
     <body>
 
         <div class="wrapper">
@@ -26,7 +27,7 @@ AQUI SE DEBEN MOSTRAR LAS GRAFICAS DE TODOS LOS SENSORES
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="header">
-                                        <h4 class="title">Gráficos en Tiempo Real</h4>
+                                        <h4 class="title">Datos de los sensores</h4>
                                         <p class="category">Datos de los sensores actualizados</p>
                                     </div>
                                     <div class="content table-responsive table-full-width">
@@ -42,4 +43,5 @@ AQUI SE DEBEN MOSTRAR LAS GRAFICAS DE TODOS LOS SENSORES
         </div>
     </body>
     <%- include ../partials/scripts %>
+    <script src="/js/socket/socket_datos.js"></script>
 </html>
