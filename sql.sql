@@ -100,8 +100,11 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 -- Volcando datos para la tabla bd_sensor.user: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`id`, `username`, `password`, `admin`) VALUES
-	(1, 'yilver', 'molina', 'T');
+INSERT INTO bd_sensor.User (name,password,admin,id,username,apellido) VALUES 
+('jose','$2a$10$Pdd3kd95IPZ/Y/S8HjeSGODbB4jy1I6mrQppGhfrXLWUk/mx2.Ghq',0,2,'pepe','rivera')
+,('jose ','$2a$10$NUGk6fB3JQkOQy0Eq.bhiuYnsrkDyzMwk.XBnAwpB635b5MvGKJNe',0,4,'sebas','alberto')
+,('rafel','$2a$10$skf21MfXTIe4S4ZIIZLDme/12HYausMl1veJTOatbLqpZS.XdWAfi',0,5,'rafa','soria')
+;;
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
