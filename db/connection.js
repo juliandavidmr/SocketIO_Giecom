@@ -1,9 +1,9 @@
 var knex = require('knex')({
  client: 'mysql',
  connection: {
-  host: '127.0.0.1',
-  user: 'root',
-  password: 'root.2016',
+  host: '192.168.56.10',
+  user: 'sebas--dev',
+  password: 'sebas--dev',
   database: 'bd_sensor'
  },
  pool: {

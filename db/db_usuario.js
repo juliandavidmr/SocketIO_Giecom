@@ -1,3 +1,4 @@
+'use strict'
 const knex = require('./connection');
 const bcrypt = require('bcryptjs');
 
@@ -72,8 +73,9 @@ export class Usuario {
 	}
 
 	comparePassword(candidatePassword, hash, callback) {
-		bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
-			if (err) throw err;
+	    bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
+		//console.log
+		if (err) throw err;
 			callback(null, isMatch);
 		});
 	}

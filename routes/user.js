@@ -5,6 +5,7 @@ const dir = '../public/';
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+import { Usuario } from "../db/db_usuario";
 
 // Login
 router.get('/login', function(req, res) {
@@ -43,16 +44,19 @@ router.post('/sign_up', function(req, res, next) {
 
 passport.use(new LocalStrategy(function(username, password, done) {
 	//console.log("Here");
-	db_u.getUserByUsername(username, function(row) {
+    new Usuario().getUserByUsername(username, function(row) {
 		//console.log("er1 ", row[0].password);
 		//////////////////////////////////////////////////////////////////////////////console.log("er2 " + est);
-		//if(err) throw err;
+	//if(err) throw err;
+	console.log(row[0].password);
+	console.log(row[0]);
 		if (row == 0) {
 			return done(null, false, {
 				message: 'Unknown User'
 			});
 		}
-		db_u.comparePassword(password, row[0].password, function(err, isMatch) {
+	new Usuario().comparePassword(password, row[0].password, function(err, isMatch) {
+	    console.log(isMatch);
 			if (err) throw err;
 			if (isMatch) {
 				return done(null, row[0]);
@@ -71,14 +75,14 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-	db_u.getUserById(id, function(row) {
+    new Usuario().getUserById(id, function(row) {
 		done(null, row[0]);
 	});
 });
 
 router.post('/login', passport.authenticate('local', {
 		successRedirect: '/',
-		failureRedirect: '/usuarios/login',
+		failureRedirect: '/usuarios/',
 		failureFlash: true
 	}),
 	function(req, res) {

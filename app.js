@@ -13,7 +13,7 @@ const session 				= require('express-session');
 const passport 				= require('passport');
 const LocalStrategy 	= require('passport-local').Strategy;
 //var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
-const flash 					= require('connect-flash');
+var flash 					= require('connect-flash');
 //var config = require('./config'); // get our config file
 
 const routes_index 		= require('./routes/index');
@@ -28,7 +28,17 @@ import { TipoSensor } from "./db/db_tiposensor";
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(cookieParser());
+//
+app.use(session({
+    secret: 'secret',
+    saveUninitialized: true,
+    resave: true
+}));
 
+app.use(flash());
+// Passport init
+app.use(passport.initialize());
+app.use(passport.session());
 /*
 ================================================================================
 																		RUTAS
@@ -63,7 +73,7 @@ app.locals.moment.locale('es');
  */
 app.use(express.static('public'));
 app.use(express.static('public/assets'));
-
+ 
 
 /*
 ================================================================================
@@ -83,13 +93,7 @@ app.set('layout', false); // defaults to 'layout'
 	Descripcion: Almacenamiento de mensajes en la sesion con flash
 ================================================================================
  */
-app.use(session({
-    secret: 'secret',
-    saveUninitialized: true,
-    resave: true
-}));
 
-app.use(flash());
 
 // Global Vars
 app.use(function (req, res, next) {
@@ -99,10 +103,6 @@ app.use(function (req, res, next) {
   res.locals.user = req.user || null;
   next();
 });
-
-// Passport init
-app.use(passport.initialize());
-app.use(passport.session());
 
 
 /*

@@ -8,20 +8,41 @@ import { Dato } from "../db/db_sensor";
 //console.log(db_dato.area);
 
 const dir = '../public/';
+var sess;
+/*
+  GET: Pagina principal
+  dashboard
+ */
+router.get('/', function(req, res) {
+    //res.render(dir + 'dashboard',{ layout: 'layout' });
+    sess = req.session;
+    //Session set when user Request our app via URL
+    if(req.isAuthenticated()) {
+	/*
+	 * This line check Session existence.
+	 * If it existed will do some action.
+	 */
+	res.render(dir + '/views/dashboard');
+    }
+    else {
+	res.redirect('/usuarios/login');
+    }
+});
 
 /*
   GET: Pagina principal
   dashboard
  */
-
- router.get('/main', function(req, res) {
- 	//res.render(dir + 'dashboard',{ layout: 'layout' });
- 	res.render(dir + '/views/dashboard');
- });
-
-router.get('/', function(req, res) {
-	//res.render(dir + 'dashboard',{ layout: 'layout' });
-	res.render(dir + '/views/usuario/login');
+router.get('/main', function(req, res) {
+    //res.render(dir + 'dashboard',{ layout: 'layout' });
+    sess = req.session;
+    //Session set when user Request our app via URL
+    if(req.isAuthenticated()) {	
+	res.render(dir + '/views/dashboard');
+    }
+    else {
+	res.redirect('/usuarios/login');
+    }
 });
 
 /*
