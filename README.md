@@ -21,12 +21,13 @@ Monitoreo en *tiempo real* de varios tipos de sensores.
 ### Instalación
 
 Tener instalado:
-1.  [node.js] Superior a la 5.0
-2.  nodemon instalado de forma global:
+1. [node.js] Superior a la 5.0
+2. nodemon instalado de forma global:
+
 ```sh
 $ npm install -g nodemon
 ```
-3.  MySQL 5.5 o superior.
+3. MySQL 5.5 o superior.
 
 Pasos de instalación:
 
@@ -35,8 +36,8 @@ $ git clone https://github.com/juliandavidmr/SocketIO_Giecom
 $ cd SocketIO_Giecom
 $ npm install
 $ nodemon --exec npm run babel-node -- app.js
-
 ```
+
    [node.js]: <http://nodejs.org>
    [jQuery]: <http://jquery.com>   
    [express]: <http://expressjs.com>

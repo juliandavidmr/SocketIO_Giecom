@@ -1,6 +1,7 @@
 'use strict';
 
 const knex = require('./connection');
+const cdb = require('./config_database');
 
 export class TipoSensor {
 
@@ -10,7 +11,7 @@ export class TipoSensor {
 	getTiposSensores(callback) {
 		knex
 			.select('*')
-			.from('TipoSensor')
+			.from(cdb.namest.tiposensor)
 			.limit(30)
 			.orderBy('NombreTipoSensor', 'desc')
 			.then(function(rows) {
@@ -24,9 +25,9 @@ export class TipoSensor {
 	getTiposSensores_Sensor(callback) {
 		knex
 			.select(['Dato', 'Dato.insertDate', 'Dato.updateDate', 'Sensor.NombreSensor'])
-			.from('Dato')
-			.orderBy('Dato.insertDate', 'DESC')
-			.innerJoin('Sensor', 'Sensor.idSensor', 'Dato.fk_idSensor')
+			.from(cdb.namest.dato)
+			.orderBy(cdb.namest.dato + '.insertDate', 'DESC')
+			.innerJoin(cdb.namest.sensor, cdb.namest.sensor + '.idSensor', cdb.namest.dato + '.fk_idSensor')
 			.limit(100)
 			.then(function(rows) {
 				callback(rows);
@@ -39,8 +40,8 @@ export class TipoSensor {
 	getSensorById(idSensor, callback) {
 		knex.where('idSensor', '=', idSensor)
 			.select('*')
-			.from('Sensor')
-			.innerJoin('TipoSensor', 'TipoSensor.idTipoSensor', 'Sensor.fk_idTipoSensor')
+			.from(cdb.namest.sensor)
+			.innerJoin(cdb.namest.tiposensor, cdb.namest.tiposensor + '.idTipoSensor', cdb.namest.sensor + '.fk_idTipoSensor')
 			.limit(1)
 			.then(function(row) {
 				callback(row);

@@ -46,15 +46,15 @@ passport.use(new LocalStrategy(function(username, password, done) {
 	//console.log("Here");
     new Usuario().getUserByUsername(username, function(row) {
 		//console.log("er1 ", row[0].password);
-		//////////////////////////////////////////////////////////////////////////////console.log("er2 " + est);
+		//////////////////////////////////////////////////console.log("er2 " + est);
 	//if(err) throw err;
 	console.log(row[0].password);
 	console.log(row[0]);
-		if (row == 0) {
-			return done(null, false, {
-				message: 'Unknown User'
-			});
-		}
+	if (row == 0) {
+		return done(null, false, {
+			message: 'Unknown User'
+		});
+	}
 	new Usuario().comparePassword(password, row[0].password, function(err, isMatch) {
 	    console.log(isMatch);
 			if (err) throw err;
@@ -81,15 +81,14 @@ passport.deserializeUser(function(id, done) {
 });
 
 router.post('/login', passport.authenticate('local', {
-		successRedirect: '/',
-		failureRedirect: '/usuarios/',
-		failureFlash: true
-	}),
-	function(req, res) {
-		console.log("logon");
-		req.flash('success_msg', 'You are In');
-		res.redirect('/');
-	});
+	successRedirect: '/',
+	failureRedirect: '/usuarios/',
+	failureFlash: true
+}), function(req, res) {
+	console.log("logon");
+	req.flash('success_msg', 'You are In');
+	res.redirect('/');
+});
 
 // router.get('/logout', function(req, res){
 // 	req.logout();

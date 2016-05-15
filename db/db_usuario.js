@@ -1,6 +1,7 @@
 'use strict'
 const knex = require('./connection');
 const bcrypt = require('bcryptjs');
+const cdb = require('./config_database');
 
 export class Usuario {
 
@@ -10,7 +11,7 @@ export class Usuario {
 	getUsers(callback) {
 		knex
 			.select('*')
-			.from('User')
+			.from(cdb.namest.usuario)
 			.limit(30)
 			.orderBy('name', 'desc')
 			.then(function(rows) {
@@ -26,7 +27,7 @@ export class Usuario {
 		bcrypt.genSalt(10, function(err, salt) {
 			bcrypt.hash(new_user.password, salt, function(err, hash) {
 				new_user.password = hash;
-				knex('User')
+				knex(cdb.namest.usuario)
 					.insert(new_user)
 					.returning('*')
 					.then(function(row) {
@@ -44,15 +45,16 @@ export class Usuario {
 		//var query = {username: username};
 		//User.findOne(query, callback);
 		//console.log("user " + username);
-		knex('User').where('username', username)
-			.select('password', 'username', 'admin', 'id')
+		console.log(username);
+		knex(cdb.namest.usuario).where('username', username)
+			.select('*')
 			.limit(1)
 			.then(function(row) {
 				//console.log("fine", row);
 				callback(row);
 			})
 			.catch(function(error) {
-				console.error("ERROR --" + error)
+				console.error("ERROR 1--" + error)
 			});
 	}
 
@@ -60,7 +62,7 @@ export class Usuario {
 		//var query = {username: username};
 		//User.findOne(query, callback);
 		//console.log("user " + username);
-		knex('User').where('id', userId)
+		knex(cdb.namest.usuario).where('id', userId)
 			.select('password', 'username', 'admin', 'id')
 			.limit(1)
 			.then(function(row) {
@@ -68,7 +70,7 @@ export class Usuario {
 				callback(row);
 			})
 			.catch(function(error) {
-				console.error("ERROR --" + error)
+				console.error("ERROR 2--" + error)
 			});
 	}
 

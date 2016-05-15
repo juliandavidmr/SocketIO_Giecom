@@ -1,63 +1,50 @@
-<!--
-
-
-===========================================================
-                      INICIO DE SESION
-===========================================================
-
--->
 <html lang="en">
-    <%- include ../partials/header %>
-    <body>
-      <!--<div class="sidebar" >
-          <div class="sidebar-wrapper">
-          </div>
-        </div>-->
-            <div class="main-panel">
-                <div class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                          <br/><br/><br/><br/>
-                            <div class="col-md-5 col-md-offset-2">
-                                <div class="card">
-                                    <div class="header">
-                                        <h4 class="title">Inicio de Sesión</h4>
-                                    </div>
-                                    <div class="content">
-                                        <form method="post" action"/user/login">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Nombre de Usuario</label>
-                                                        <input name="username" type="text" class="form-control" placeholder="Usuario">
-                                                    </div>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Contraseña</label>
-                                                        <input name="password" type="password" class="form-control" placeholder="Contraseña">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <button type="submit" class="btn btn-info btn-block btn-fill">Iniciar</button>
-                                          </div>
-
-
-                                            <div class="clearfix"></div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
+   <%- include ../partials/header %>
+   <body>
+      <div class="main-panel">
+         <div class="content">
+            <div class="container-fluid">
+               <div class="row">
+                  <br/><br/><br/><br/>
+                  <div class="col-md-5 col-md-offset-2">
+                     <div class="card">
+                        <div class="header">
+                           <h4 class="title">Inicio de Sesión</h4>
                         </div>
-                    </div>
-                </div>
+                        <div class="content">
+                           <form method="post" action"/user/login">
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <label>Nombre de Usuario</label>
+                                       <input name="username" type="text" class="form-control" placeholder="Usuario" required>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <label>Contraseña</label>
+                                       <input name="password" type="password" class="form-control" placeholder="Contraseña" required>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <button type="submit" class="btn btn-info btn-block btn-fill">Iniciar</button>
+                              </div>
+
+                              <div class="clearfix"></div>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
             </div>
+         </div>
+      </div>
 
-    </body>
+   </body>
 
-    <%- include ../partials/scripts %>
+   <%- include ../partials/scripts %>
 </html>

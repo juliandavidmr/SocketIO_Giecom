@@ -5,11 +5,6 @@
 -- HeidiSQL Versión:             9.3.0.4984
 -- --------------------------------------------------------
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8mb4 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
 -- Volcando estructura de base de datos para bd_sensor
 CREATE DATABASE IF NOT EXISTS `bd_sensor` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `bd_sensor`;
@@ -92,18 +87,19 @@ INSERT INTO `tiposensor` (`idTipoSensor`, `NombreTipoSensor`) VALUES
 -- Volcando estructura para tabla bd_sensor.user
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `admin` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla bd_sensor.user: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO bd_sensor.User (name,password,admin,id,username,apellido) VALUES 
-('jose','$2a$10$Pdd3kd95IPZ/Y/S8HjeSGODbB4jy1I6mrQppGhfrXLWUk/mx2.Ghq',0,2,'pepe','rivera')
-,('jose ','$2a$10$NUGk6fB3JQkOQy0Eq.bhiuYnsrkDyzMwk.XBnAwpB635b5MvGKJNe',0,4,'sebas','alberto')
-,('rafel','$2a$10$skf21MfXTIe4S4ZIIZLDme/12HYausMl1veJTOatbLqpZS.XdWAfi',0,5,'rafa','soria')
+INSERT INTO bd_sensor.user (name,password,admin,id,username) VALUES
+('jose','$2a$10$Pdd3kd95IPZ/Y/S8HjeSGODbB4jy1I6mrQppGhfrXLWUk/mx2.Ghq',0,2,'pepe')
+,('jose ','$2a$10$NUGk6fB3JQkOQy0Eq.bhiuYnsrkDyzMwk.XBnAwpB635b5MvGKJNe',0,4,'sebas')
+,('rafel','$2a$10$skf21MfXTIe4S4ZIIZLDme/12HYausMl1veJTOatbLqpZS.XdWAfi',0,5,'rafa')
 ;;
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
